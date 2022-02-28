@@ -73,12 +73,12 @@ namespace AircraftPlantFileImplement.Implements
         }
         private OrderViewModel CreateModel(Order order)
         {
-            string planeName = source.Planes.FirstOrDefault(rec => rec.Id == order.PlaneId).PlaneName;
+            
             return new OrderViewModel
             {
                 Id = order.Id,
                 PlaneId = order.PlaneId,
-                PlaneName = planeName,
+                PlaneName = source.Planes.FirstOrDefault(rec => rec.Id == order.PlaneId)?.PlaneName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status.ToString(),

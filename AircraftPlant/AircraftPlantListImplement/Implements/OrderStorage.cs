@@ -108,6 +108,7 @@ namespace AircraftPlantListImplement.Implements
                 if (document.Id == order.PlaneId)
                 {
                     planeName = document.PlaneName;
+                    break;
                 }
             }
             return new OrderViewModel
