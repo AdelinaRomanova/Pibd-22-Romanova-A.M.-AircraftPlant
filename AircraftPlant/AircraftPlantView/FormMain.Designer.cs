@@ -39,6 +39,7 @@ namespace AircraftPlantView
 			this.buttonOrderReady = new System.Windows.Forms.Button();
 			this.buttonIssuedOrder = new System.Windows.Forms.Button();
 			this.buttonRef = new System.Windows.Forms.Button();
+			this.складыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
 			this.SuspendLayout();
@@ -58,7 +59,8 @@ namespace AircraftPlantView
 			// 
 			this.справочникиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.компонентыToolStripMenuItem,
-            this.изделияToolStripMenuItem});
+            this.изделияToolStripMenuItem,
+            this.складыToolStripMenuItem});
 			this.справочникиToolStripMenuItem.Name = "справочникиToolStripMenuItem";
 			this.справочникиToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
 			this.справочникиToolStripMenuItem.Text = "Справочники";
@@ -66,14 +68,14 @@ namespace AircraftPlantView
 			// компонентыToolStripMenuItem
 			// 
 			this.компонентыToolStripMenuItem.Name = "компонентыToolStripMenuItem";
-			this.компонентыToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.компонентыToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
 			this.компонентыToolStripMenuItem.Text = "Компоненты";
 			this.компонентыToolStripMenuItem.Click += new System.EventHandler(this.компонентыToolStripMenuItem_Click);
 			// 
 			// изделияToolStripMenuItem
 			// 
 			this.изделияToolStripMenuItem.Name = "изделияToolStripMenuItem";
-			this.изделияToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.изделияToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
 			this.изделияToolStripMenuItem.Text = "Изделия";
 			this.изделияToolStripMenuItem.Click += new System.EventHandler(this.изделияToolStripMenuItem_Click);
 			// 
@@ -138,6 +140,12 @@ namespace AircraftPlantView
 			this.buttonRef.UseVisualStyleBackColor = true;
 			this.buttonRef.Click += new System.EventHandler(this.buttonRef_Click);
 			// 
+			// складыToolStripMenuItem
+			// 
+			this.складыToolStripMenuItem.Name = "складыToolStripMenuItem";
+			this.складыToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.складыToolStripMenuItem.Text = "Склады";
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -174,5 +182,6 @@ namespace AircraftPlantView
 		private System.Windows.Forms.Button buttonRef;
 		private System.Windows.Forms.ToolStripMenuItem компонентыToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem изделияToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem складыToolStripMenuItem;
 	}
 }
