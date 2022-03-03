@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AircraftPlantBusinessLogic"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AircraftPlantListImplement", "AircraftPlantListImplement\AircraftPlantListImplement.csproj", "{27FCCD66-FE9B-4627-A5AF-F52E69C89DEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AircraftPlantFileImplement", "AircraftPlantFileImplement\AircraftPlantFileImplement.csproj", "{738BC1C0-55C5-46F7-9E85-D340315A5F89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AircraftPlantFileImplement", "AircraftPlantFileImplement\AircraftPlantFileImplement.csproj", "{738BC1C0-55C5-46F7-9E85-D340315A5F89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AircraftPlantDatabaseImplement", "AircraftPlantDatabaseImplement\AircraftPlantDatabaseImplement.csproj", "{8C72C5A4-77F4-48AD-A0B3-4BCD2C93C290}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{738BC1C0-55C5-46F7-9E85-D340315A5F89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{738BC1C0-55C5-46F7-9E85-D340315A5F89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{738BC1C0-55C5-46F7-9E85-D340315A5F89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C72C5A4-77F4-48AD-A0B3-4BCD2C93C290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C72C5A4-77F4-48AD-A0B3-4BCD2C93C290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C72C5A4-77F4-48AD-A0B3-4BCD2C93C290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C72C5A4-77F4-48AD-A0B3-4BCD2C93C290}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
