@@ -88,8 +88,7 @@ namespace AircraftPlantDatabaseImplement.Implements
                 throw new Exception("Элемент не найден");
             }
         }
-        public static Order CreateModel(OrderBindingModel model,
-            Order order)
+        public static Order CreateModel(OrderBindingModel model, Order order)
         {
             order.PlaneId = model.PlaneId;
             order.Count = model.Count;
