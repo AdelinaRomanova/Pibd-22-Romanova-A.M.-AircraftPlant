@@ -33,13 +33,13 @@ namespace AircraftPlantView
 			this.справочникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.компонентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.изделияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.складыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dataGridView = new System.Windows.Forms.DataGridView();
 			this.buttonCreateOrder = new System.Windows.Forms.Button();
 			this.buttonTakeOrder = new System.Windows.Forms.Button();
 			this.buttonOrderReady = new System.Windows.Forms.Button();
 			this.buttonIssuedOrder = new System.Windows.Forms.Button();
 			this.buttonRef = new System.Windows.Forms.Button();
-			this.складыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
 			this.SuspendLayout();
@@ -78,6 +78,13 @@ namespace AircraftPlantView
 			this.изделияToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
 			this.изделияToolStripMenuItem.Text = "Изделия";
 			this.изделияToolStripMenuItem.Click += new System.EventHandler(this.изделияToolStripMenuItem_Click);
+			// 
+			// складыToolStripMenuItem
+			// 
+			this.складыToolStripMenuItem.Name = "складыToolStripMenuItem";
+			this.складыToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.складыToolStripMenuItem.Text = "Склады";
+			this.складыToolStripMenuItem.Click += new System.EventHandler(this.складыToolStripMenuItem_Click);
 			// 
 			// dataGridView
 			// 
@@ -139,12 +146,6 @@ namespace AircraftPlantView
 			this.buttonRef.Text = "Обновить список";
 			this.buttonRef.UseVisualStyleBackColor = true;
 			this.buttonRef.Click += new System.EventHandler(this.buttonRef_Click);
-			// 
-			// складыToolStripMenuItem
-			// 
-			this.складыToolStripMenuItem.Name = "складыToolStripMenuItem";
-			this.складыToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-			this.складыToolStripMenuItem.Text = "Склады";
 			// 
 			// FormMain
 			// 

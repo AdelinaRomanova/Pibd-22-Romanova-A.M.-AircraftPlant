@@ -8,7 +8,7 @@ using AircraftPlantContracts.ViewModels;
 
 namespace AircraftPlantContracts.StoragesContracts
 {
-	public class IWarehouseStorage
+	public interface IWarehouseStorage
 	{
         List<WarehouseViewModel> GetFullList();
         List<WarehouseViewModel> GetFilteredList(WarehouseBindingModel model);

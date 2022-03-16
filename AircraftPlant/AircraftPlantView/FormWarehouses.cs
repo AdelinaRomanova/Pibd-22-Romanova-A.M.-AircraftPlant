@@ -27,10 +27,10 @@ namespace AircraftPlantView
 
 		private void buttonUpd_Click(object sender, EventArgs e)
 		{
-			if (dataGridView.SelectedRows.Count == 1)
+			if (dataGridView1.SelectedRows.Count == 1)
 			{
 				var form = Program.Container.Resolve<FormWarehouse>();
-				form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
+				form.Id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
 				if (form.ShowDialog() == DialogResult.OK)
 				{
 					LoadData();
@@ -40,20 +40,18 @@ namespace AircraftPlantView
 
 		private void buttonDel_Click(object sender, EventArgs e)
 		{
-			if (dataGridView.SelectedRows.Count == 1)
+			if (dataGridView1.SelectedRows.Count == 1)
 			{
-				if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo,
-					MessageBoxIcon.Question) == DialogResult.Yes)
+				if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 				{
-					int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
+					int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
 					try
 					{
 						logic.Delete(new WarehouseBindingModel { Id = id });
 					}
 					catch (Exception ex)
 					{
-						MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-							MessageBoxIcon.Error);
+						MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					}
 					LoadData();
 				}
@@ -77,17 +75,15 @@ namespace AircraftPlantView
 				var list = logic.Read(null);
 				if (list != null)
 				{
-					dataGridView.DataSource = list;
-					dataGridView.Columns[0].Visible = false;
-					dataGridView.Columns[4].Visible = false;
-					dataGridView.Columns[1].AutoSizeMode =
-						DataGridViewAutoSizeColumnMode.Fill;
+					dataGridView1.DataSource = list;
+					dataGridView1.Columns[0].Visible = false;
+					dataGridView1.Columns[4].Visible = false;
+					dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 				}
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
+				MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,MessageBoxIcon.Error);
 			}
 		}
 	}
