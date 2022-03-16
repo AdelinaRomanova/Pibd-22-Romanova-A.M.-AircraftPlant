@@ -24,7 +24,6 @@ namespace AircraftPlantView
             InitializeComponent();
             this.logic = logic;
         }
-
         private void FormWarehouse_Load(object sender, EventArgs e)
         {
             if (id.HasValue)
@@ -89,7 +88,6 @@ namespace AircraftPlantView
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void buttonClose_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
