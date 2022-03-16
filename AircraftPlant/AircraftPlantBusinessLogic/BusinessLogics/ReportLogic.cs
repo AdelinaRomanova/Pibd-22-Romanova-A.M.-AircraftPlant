@@ -19,9 +19,9 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 		private readonly AbstractSaveToWord _saveToWord;
 		private readonly AbstractSaveToPdf _saveToPdf;
 
-		public ReportLogic(IPlaneStorage productStorage, IComponentStorage componentStorage, IOrderStorage orderStorage, AbstractSaveToExcel saveToExcel, AbstractSaveToWord saveToWord, AbstractSaveToPdf saveToPdf)
+		public ReportLogic(IPlaneStorage planeStorage, IComponentStorage componentStorage, IOrderStorage orderStorage, AbstractSaveToExcel saveToExcel, AbstractSaveToWord saveToWord, AbstractSaveToPdf saveToPdf)
 		{
-			_planeStorage = productStorage;
+			_planeStorage = planeStorage;
 			_componentStorage = componentStorage;
 			_orderStorage = orderStorage;
 			_saveToExcel = saveToExcel;

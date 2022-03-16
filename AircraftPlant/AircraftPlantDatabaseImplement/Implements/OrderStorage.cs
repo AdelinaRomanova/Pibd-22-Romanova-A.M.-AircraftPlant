@@ -26,6 +26,7 @@ namespace AircraftPlantDatabaseImplement.Implements
                     Status = rec.Status.ToString(),
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement
+                    
                 }).ToList();
         }
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
@@ -35,8 +36,8 @@ namespace AircraftPlantDatabaseImplement.Implements
                 return null;
             }
             using var context = new AircraftPlantDatabase();
-            return context.Orders.Include(rec => rec.Planes).Where(rec => rec.PlaneId == model.PlaneId).Select(rec => new OrderViewModel
-            {
+            return context.Orders.Include(rec => rec.Planes).Where(rec => rec.PlaneId == model.PlaneId ||
+            (rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)).Select(rec => new OrderViewModel {
                 Id = rec.Id,
                 PlaneId = rec.PlaneId,
                 PlaneName = rec.Planes.PlaneName,

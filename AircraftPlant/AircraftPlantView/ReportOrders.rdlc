@@ -2,7 +2,7 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="ContractsViewModels">
+    <DataSource Name="AircraftPlantContractsViewModels">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
@@ -64,7 +64,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Left>5.81703cm</Left>
+            <Top>0.43603cm</Top>
+            <Left>6.76487cm</Left>
             <Height>0.6cm</Height>
             <Width>2.5cm</Width>
             <Style>
@@ -139,7 +140,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Изделие</Value>
+                                  <Value>Изделие </Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -169,7 +170,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Количество</Value>
+                                  <Value>Количество </Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -192,7 +193,7 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox8">
+                        <Textbox Name="Textbox10">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -206,7 +207,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox8</rd:DefaultName>
+                          <rd:DefaultName>Textbox10</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -222,7 +223,7 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox10">
+                        <Textbox Name="Textbox8">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -236,7 +237,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox10</rd:DefaultName>
+                          <rd:DefaultName>Textbox8</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -429,8 +430,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSetOrders</DataSetName>
-            <Top>1.4732cm</Top>
-            <Left>0.81703cm</Left>
+            <Top>1.6002cm</Top>
+            <Left>1.74837cm</Left>
             <Height>1.2cm</Height>
             <Width>12.5cm</Width>
             <ZIndex>1</ZIndex>
@@ -455,8 +456,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>3.54753cm</Top>
-            <Left>6.57437cm</Left>
+            <Top>3.71687cm</Top>
+            <Left>7.8232cm</Left>
             <Height>0.6cm</Height>
             <Width>2.5cm</Width>
             <ZIndex>2</ZIndex>
@@ -477,7 +478,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
+                    <Value>=Sum(Fields!Count.Value, "DataSetOrders")</Value>
                     <Style />
                   </TextRun>
                 </TextRuns>
@@ -485,8 +486,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox13</rd:DefaultName>
-            <Top>3.54753cm</Top>
-            <Left>9.21548cm</Left>
+            <Top>3.7592cm</Top>
+            <Left>10.4902cm</Left>
             <Height>0.6cm</Height>
             <Width>2.5cm</Width>
             <ZIndex>3</ZIndex>
@@ -538,5 +539,5 @@
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
-  <rd:ReportID>4cdf5f91-f057-4c4d-af06-cccc28d30ab1</rd:ReportID>
+  <rd:ReportID>62213fcc-4f6a-4f0a-9f5c-896be00d6ffd</rd:ReportID>
 </Report>
