@@ -88,8 +88,7 @@ namespace AircraftPlantDatabaseImplement.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_PlaneId",
                 table: "Orders",
-                column: "PlaneId",
-                unique: true);
+                column: "PlaneId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlaneComponents_ComponentId",
