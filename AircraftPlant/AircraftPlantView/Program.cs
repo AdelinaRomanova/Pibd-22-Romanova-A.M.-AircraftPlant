@@ -3,9 +3,12 @@ using AircraftPlantBusinessLogic.BusinessLogics;
 using AircraftPlantContracts.BusinessLogicsContracts;
 using AircraftPlantContracts.StoragesContracts;
 using AircraftPlantDatabaseImplement.Implements;
+using AircraftPlantBusinessLogic.OfficePackage;
+using AircraftPlantBusinessLogic.OfficePackage.Implements;
 using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
+using AircraftPlantBusinessLogic.Implements;
 
 namespace AircraftPlantView
 {
@@ -44,6 +47,10 @@ namespace AircraftPlantView
 			currentContainer.RegisterType<IComponentLogic, ComponentLogic>(new HierarchicalLifetimeManager());
 			currentContainer.RegisterType<IOrderLogic, OrderLogic>(new HierarchicalLifetimeManager());
 			currentContainer.RegisterType<IPlaneLogic, PlaneLogic>(new HierarchicalLifetimeManager());
+			currentContainer.RegisterType<IReportLogic, ReportLogic>(new HierarchicalLifetimeManager());
+			currentContainer.RegisterType<AbstractSaveToExcel, SaveToExcel>(new HierarchicalLifetimeManager());
+			currentContainer.RegisterType<AbstractSaveToPdf, SaveToPdf>(new HierarchicalLifetimeManager());
+			currentContainer.RegisterType<AbstractSaveToWord, SaveToWord>(new HierarchicalLifetimeManager());
 			return currentContainer;
 		}
 	}

@@ -1,5 +1,7 @@
 ﻿using AircraftPlantContracts.BindingModels;
 using AircraftPlantBusinessLogic.BusinessLogics;
+using AircraftPlantContracts.BusinessLogicsContracts;
+using AircraftPlantBusinessLogic.OfficePackage;
 using System;
 using System.Windows.Forms;
 using Unity;
@@ -9,10 +11,12 @@ namespace AircraftPlantView
 	public partial class FormMain : Form
 	{
 		private readonly OrderLogic _orderLogic;
-		public FormMain(OrderLogic orderLogic)
+		private readonly IReportLogic _reportLogic;
+		public FormMain(OrderLogic orderLogic, IReportLogic reportLogic)
 		{
 			InitializeComponent();
 			_orderLogic = orderLogic;
+			_reportLogic = reportLogic;
 		}
 		private void LoadData()
 		{
@@ -114,6 +118,29 @@ namespace AircraftPlantView
 		private void FormMain_Load(object sender, EventArgs e)
 		{
 			LoadData();
+		}
+		private void ComponentsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
+				_reportLogic.SaveComponentsToWordFile(new ReportBindingModel
+				{
+					FileName = dialog.FileName
+				});
+				MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+
+		}
+		private void ComponentProductsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var form = Program.Container.Resolve<FormReportPlaneComponents>();
+			form.ShowDialog();
+		}
+		private void OredersToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var form = Program.Container.Resolve<FormReportOrders>();
+			form.ShowDialog();
 		}
 	}
 }
