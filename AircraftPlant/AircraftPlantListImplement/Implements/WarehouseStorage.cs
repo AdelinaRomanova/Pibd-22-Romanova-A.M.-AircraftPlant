@@ -50,8 +50,7 @@ namespace AircraftPlantListImplement.Implements
             }
             foreach (var warehouse in source.Warehouses)
             {
-                if (warehouse.Id == model.Id ||
-                    warehouse.WarehouseName == model.WarehouseName)
+                if (warehouse.Id == model.Id || warehouse.WarehouseName == model.WarehouseName)
                 {
                     return CreateModel(warehouse);
                 }
@@ -139,13 +138,11 @@ namespace AircraftPlantListImplement.Implements
             {
                 if (warehouse.WarehouseComponents.ContainsKey(component.Key))
                 {
-                    warehouse.WarehouseComponents[component.Key] =
-                        model.WarehouseComponents[component.Key].Item2;
+                    warehouse.WarehouseComponents[component.Key] = model.WarehouseComponents[component.Key].Item2;
                 }
                 else
                 {
-                    warehouse.WarehouseComponents.Add(component.Key,
-                        model.WarehouseComponents[component.Key].Item2);
+                    warehouse.WarehouseComponents.Add(component.Key, model.WarehouseComponents[component.Key].Item2);
                 }
             }
             return warehouse;
