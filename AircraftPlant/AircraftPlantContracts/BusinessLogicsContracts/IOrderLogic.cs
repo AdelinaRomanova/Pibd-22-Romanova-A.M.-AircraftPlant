@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using AircraftPlantContracts.BindingModels;
 using AircraftPlantContracts.ViewModels;
-
 using System.Text;
 
 namespace AircraftPlantContracts.BusinessLogicsContracts
