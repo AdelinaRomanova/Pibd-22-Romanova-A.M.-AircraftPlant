@@ -2,7 +2,6 @@
 
 namespace AircraftPlantDatabaseImplement.Models
 {
-	// Сколько компонентов, требуется при изготовлении изделия
 	public class PlaneComponent
 	{
 		public int Id { get; set; }

@@ -60,19 +60,40 @@ namespace AircraftPlantDatabaseImplement.Implements
         public void Insert(OrderBindingModel model)
         {
             using var context = new AircraftPlantDatabase();
-            context.Orders.Add(CreateModel(model, new Order()));
-            context.SaveChanges();
+            using var transaction = context.Database.BeginTransaction();
+            try
+            {
+                context.Orders.Add(CreateModel(model, new Order()));
+                context.SaveChanges();
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
         public void Update(OrderBindingModel model)
         {
             using var context = new AircraftPlantDatabase();
-            var element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
+            using var transaction = context.Database.BeginTransaction();
+            try
             {
-                throw new Exception("Элемент не найден");
+                var element = context.Orders.FirstOrDefault(rec => rec.Id ==
+                model.Id);
+                if (element == null)
+                {
+                    throw new Exception("Элемент не найден");
+                }
+                CreateModel(model, element);
+                context.SaveChanges();
+                transaction.Commit();
             }
-            CreateModel(model, element);
-            context.SaveChanges();
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
         public void Delete(OrderBindingModel model)
         {
