@@ -2,7 +2,8 @@ using System;
 using AircraftPlantBusinessLogic.BusinessLogics;
 using AircraftPlantContracts.BusinessLogicsContracts;
 using AircraftPlantContracts.StoragesContracts;
-using AircraftPlantListImplement.Implements;
+using AircraftPlantFileImplement.Implements;
+using AircraftPlantFileImplement;
 using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
@@ -33,6 +34,7 @@ namespace AircraftPlantView
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(Container.Resolve<FormMain>());
+			FileDataListSingleton.Save();
 		}
 		private static IUnityContainer BuildUnityContainer()
 		{

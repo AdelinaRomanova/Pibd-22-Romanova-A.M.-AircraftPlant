@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AircraftPlantBusinessLogic\AircraftPlantBusinessLogic.csproj" />
+    <ProjectReference Include="..\AircraftPlantFileImplement\AircraftPlantFileImplement.csproj" />
     <ProjectReference Include="..\AircraftPlantListImplement\AircraftPlantListImplement.csproj" />
   </ItemGroup>
 
