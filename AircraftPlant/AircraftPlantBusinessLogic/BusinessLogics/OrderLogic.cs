@@ -1,19 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using AircraftPlantContracts.BindingModels;
+﻿using AircraftPlantContracts.BindingModels;
 using AircraftPlantContracts.BusinessLogicsContracts;
 using AircraftPlantContracts.Enums;
 using AircraftPlantContracts.StoragesContracts;
 using AircraftPlantContracts.ViewModels;
+using System;
+using System.Collections.Generic;
 
 namespace AircraftPlantBusinessLogic.BusinessLogics
 {
 	public class OrderLogic : IOrderLogic
 	{
 		private readonly IOrderStorage _orderStorage;
-		public OrderLogic(IOrderStorage orderStorage)
+		private readonly IWarehouseStorage _warehouseStorage;
+		private readonly IPlaneStorage _planeStorage;
+		public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage, IPlaneStorage planeStorage)
 		{
 			_orderStorage = orderStorage;
+			_warehouseStorage = warehouseStorage;
+			_planeStorage = planeStorage;
 		}
 		public List<OrderViewModel> Read(OrderBindingModel model)
 		{
@@ -49,6 +53,11 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 			if (order.Status != OrderStatus.Принят.ToString())
 			{
 				throw new Exception("Заказ не в статусе \"Принят\"");
+			}
+			var plane = _planeStorage.GetElement(new PlaneBindingModel { Id = order.PlaneId });
+			if (!_warehouseStorage.CheckComponentsCount(order.Count, plane.PlaneComponents))
+			{
+				throw new Exception("Недостаточно компонентов на складе!");
 			}
 			_orderStorage.Update(new OrderBindingModel
 			{

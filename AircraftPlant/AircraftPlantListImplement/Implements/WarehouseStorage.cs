@@ -97,6 +97,31 @@ namespace AircraftPlantListImplement.Implements
             }
             throw new Exception("Элемент не найден");
         }
+        private static Warehouse CreateModel(WarehouseBindingModel model, Warehouse warehouse)
+        {
+            warehouse.WarehouseName = model.WarehouseName;
+            warehouse.Responsible = model.Responsible;
+            warehouse.DateCreate = model.DateCreate;
+            foreach (var key in warehouse.WarehouseComponents.Keys.ToList())
+            {
+                if (!model.WarehouseComponents.ContainsKey(key))
+                {
+                    warehouse.WarehouseComponents.Remove(key);
+                }
+            }
+            foreach (var component in model.WarehouseComponents)
+            {
+                if (warehouse.WarehouseComponents.ContainsKey(component.Key))
+                {
+                    warehouse.WarehouseComponents[component.Key] = model.WarehouseComponents[component.Key].Item2;
+                }
+                else
+                {
+                    warehouse.WarehouseComponents.Add(component.Key, model.WarehouseComponents[component.Key].Item2);
+                }
+            }
+            return warehouse;
+        }
         private WarehouseViewModel CreateModel(Warehouse warehouse)
         {
             var warehouseComonents = new Dictionary<int, (string, int)>();
@@ -122,30 +147,10 @@ namespace AircraftPlantListImplement.Implements
                 WarehouseComponents = warehouseComonents
             };
         }
-        private static Warehouse CreateModel(WarehouseBindingModel model, Warehouse warehouse)
+
+        public bool CheckComponentsCount(int count, Dictionary<int, (string, int)> components)
         {
-            warehouse.WarehouseName = model.WarehouseName;
-            warehouse.Responsible = model.Responsible;
-            warehouse.DateCreate = model.DateCreate;
-            foreach (var key in warehouse.WarehouseComponents.Keys.ToList())
-            {
-                if (!model.WarehouseComponents.ContainsKey(key))
-                {
-                    warehouse.WarehouseComponents.Remove(key);
-                }
-            }
-            foreach (var component in model.WarehouseComponents)
-            {
-                if (warehouse.WarehouseComponents.ContainsKey(component.Key))
-                {
-                    warehouse.WarehouseComponents[component.Key] = model.WarehouseComponents[component.Key].Item2;
-                }
-                else
-                {
-                    warehouse.WarehouseComponents.Add(component.Key, model.WarehouseComponents[component.Key].Item2);
-                }
-            }
-            return warehouse;
+            throw new NotImplementedException();
         }
     }
 }
