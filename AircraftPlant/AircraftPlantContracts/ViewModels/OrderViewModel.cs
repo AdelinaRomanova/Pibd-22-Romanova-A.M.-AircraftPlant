@@ -9,7 +9,10 @@ namespace AircraftPlantContracts.ViewModels
 	public class OrderViewModel
 	{
 		public int Id { get; set; }
+		public int ClientId { get; set;}
 		public int PlaneId { get; set; }
+		[DisplayName("ФИО клиента")]
+		public string ClientFIO { get; set; }
 		[DisplayName("Изделие")]
 		public string PlaneName { get; set; }
 		[DisplayName("Количество")]

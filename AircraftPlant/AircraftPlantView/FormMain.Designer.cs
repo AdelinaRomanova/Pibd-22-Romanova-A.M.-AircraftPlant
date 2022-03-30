@@ -55,7 +55,7 @@ namespace AircraftPlantView
             this.отчётыToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(1209, 28);
+			this.menuStrip1.Size = new System.Drawing.Size(1279, 28);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -71,7 +71,7 @@ namespace AircraftPlantView
 			// компонентыToolStripMenuItem
 			// 
 			this.компонентыToolStripMenuItem.Name = "компонентыToolStripMenuItem";
-			this.компонентыToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.компонентыToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.компонентыToolStripMenuItem.Text = "Компоненты";
 			this.компонентыToolStripMenuItem.Click += new System.EventHandler(this.компонентыToolStripMenuItem_Click);
 			// 
@@ -121,12 +121,12 @@ namespace AircraftPlantView
 			this.dataGridView.Name = "dataGridView";
 			this.dataGridView.RowHeadersWidth = 51;
 			this.dataGridView.RowTemplate.Height = 29;
-			this.dataGridView.Size = new System.Drawing.Size(855, 407);
+			this.dataGridView.Size = new System.Drawing.Size(953, 407);
 			this.dataGridView.TabIndex = 1;
 			// 
 			// buttonCreateOrder
 			// 
-			this.buttonCreateOrder.Location = new System.Drawing.Point(940, 86);
+			this.buttonCreateOrder.Location = new System.Drawing.Point(1011, 83);
 			this.buttonCreateOrder.Name = "buttonCreateOrder";
 			this.buttonCreateOrder.Size = new System.Drawing.Size(224, 29);
 			this.buttonCreateOrder.TabIndex = 2;
@@ -136,7 +136,7 @@ namespace AircraftPlantView
 			// 
 			// buttonTakeOrder
 			// 
-			this.buttonTakeOrder.Location = new System.Drawing.Point(940, 146);
+			this.buttonTakeOrder.Location = new System.Drawing.Point(1011, 143);
 			this.buttonTakeOrder.Name = "buttonTakeOrder";
 			this.buttonTakeOrder.Size = new System.Drawing.Size(224, 29);
 			this.buttonTakeOrder.TabIndex = 3;
@@ -146,7 +146,7 @@ namespace AircraftPlantView
 			// 
 			// buttonOrderReady
 			// 
-			this.buttonOrderReady.Location = new System.Drawing.Point(940, 208);
+			this.buttonOrderReady.Location = new System.Drawing.Point(1011, 205);
 			this.buttonOrderReady.Name = "buttonOrderReady";
 			this.buttonOrderReady.Size = new System.Drawing.Size(224, 29);
 			this.buttonOrderReady.TabIndex = 4;
@@ -156,7 +156,7 @@ namespace AircraftPlantView
 			// 
 			// buttonIssuedOrder
 			// 
-			this.buttonIssuedOrder.Location = new System.Drawing.Point(938, 271);
+			this.buttonIssuedOrder.Location = new System.Drawing.Point(1009, 268);
 			this.buttonIssuedOrder.Name = "buttonIssuedOrder";
 			this.buttonIssuedOrder.Size = new System.Drawing.Size(226, 29);
 			this.buttonIssuedOrder.TabIndex = 5;
@@ -166,7 +166,7 @@ namespace AircraftPlantView
 			// 
 			// buttonRef
 			// 
-			this.buttonRef.Location = new System.Drawing.Point(938, 327);
+			this.buttonRef.Location = new System.Drawing.Point(1009, 324);
 			this.buttonRef.Name = "buttonRef";
 			this.buttonRef.Size = new System.Drawing.Size(224, 29);
 			this.buttonRef.TabIndex = 6;
@@ -178,7 +178,7 @@ namespace AircraftPlantView
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1209, 450);
+			this.ClientSize = new System.Drawing.Size(1279, 450);
 			this.Controls.Add(this.buttonRef);
 			this.Controls.Add(this.buttonIssuedOrder);
 			this.Controls.Add(this.buttonOrderReady);

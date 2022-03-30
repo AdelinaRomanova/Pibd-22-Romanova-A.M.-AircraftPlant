@@ -13,7 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AircraftPlantListImplement"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AircraftPlantFileImplement", "AircraftPlantFileImplement\AircraftPlantFileImplement.csproj", "{738BC1C0-55C5-46F7-9E85-D340315A5F89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AircraftPlantDatabaseImplement", "AircraftPlantDatabaseImplement\AircraftPlantDatabaseImplement.csproj", "{8C72C5A4-77F4-48AD-A0B3-4BCD2C93C290}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AircraftPlantDatabaseImplement", "AircraftPlantDatabaseImplement\AircraftPlantDatabaseImplement.csproj", "{8C72C5A4-77F4-48AD-A0B3-4BCD2C93C290}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AircraftPlantRestApi", "AircraftPlantRestApi\AircraftPlantRestApi.csproj", "{DA98ED9E-4310-4F73-AF1D-274C7C0BCD14}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AircraftPlantClientApp", "AircraftPlantClientApp\AircraftPlantClientApp.csproj", "{BACCDFBC-E10F-4F89-ACA2-B24D18559AEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "new", "new\new.csproj", "{973F83AF-EAF8-47BB-817D-46C9B7680849}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +51,18 @@ Global
 		{8C72C5A4-77F4-48AD-A0B3-4BCD2C93C290}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C72C5A4-77F4-48AD-A0B3-4BCD2C93C290}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C72C5A4-77F4-48AD-A0B3-4BCD2C93C290}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA98ED9E-4310-4F73-AF1D-274C7C0BCD14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA98ED9E-4310-4F73-AF1D-274C7C0BCD14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA98ED9E-4310-4F73-AF1D-274C7C0BCD14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA98ED9E-4310-4F73-AF1D-274C7C0BCD14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BACCDFBC-E10F-4F89-ACA2-B24D18559AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BACCDFBC-E10F-4F89-ACA2-B24D18559AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BACCDFBC-E10F-4F89-ACA2-B24D18559AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BACCDFBC-E10F-4F89-ACA2-B24D18559AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{973F83AF-EAF8-47BB-817D-46C9B7680849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{973F83AF-EAF8-47BB-817D-46C9B7680849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{973F83AF-EAF8-47BB-817D-46C9B7680849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{973F83AF-EAF8-47BB-817D-46C9B7680849}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

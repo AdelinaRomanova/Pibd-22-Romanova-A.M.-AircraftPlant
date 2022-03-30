@@ -16,6 +16,7 @@ namespace AircraftPlantDatabaseImplement.Implements
             using var context = new AircraftPlantDatabase();
             return context.Orders.
                 Include(rec => rec.Planes)
+                .Include(rec => rec.Client)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
@@ -25,8 +26,9 @@ namespace AircraftPlantDatabaseImplement.Implements
                     Sum = rec.Sum,
                     Status = rec.Status.ToString(),
                     DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement
-                    
+                    DateImplement = rec.DateImplement,
+                    ClientId = rec.ClientId,
+                    ClientFIO = rec.Client.ClientFIO
                 }).ToList();
         }
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
@@ -36,17 +38,21 @@ namespace AircraftPlantDatabaseImplement.Implements
                 return null;
             }
             using var context = new AircraftPlantDatabase();
-            return context.Orders.Include(rec => rec.Planes).Where(rec => rec.PlaneId == model.PlaneId ||
-            (rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)).Select(rec => new OrderViewModel {
-                Id = rec.Id,
-                PlaneId = rec.PlaneId,
-                PlaneName = rec.Planes.PlaneName,
-                Count = rec.Count,
-                Sum = rec.Sum,
-                Status = rec.Status.ToString(),
-                DateCreate = rec.DateCreate,
-                DateImplement = rec.DateImplement
-            }).ToList();
+            return context.Orders.Include(rec => rec.Planes).Include(rec => rec.Client).Where(rec => rec.PlaneId == model.PlaneId ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo) ||
+                model.ClientId.HasValue && rec.ClientId == model.ClientId).Select(rec => new OrderViewModel
+                {
+                    Id = rec.Id,
+                    PlaneId = rec.PlaneId,
+                    PlaneName = rec.Planes.PlaneName,
+                    Count = rec.Count,
+                    Sum = rec.Sum,
+                    Status = rec.Status.ToString(),
+                    DateCreate = rec.DateCreate,
+                    DateImplement = rec.DateImplement,
+                    ClientId = rec.ClientId,
+                    ClientFIO = rec.Client.ClientFIO
+                }).ToList();
         }
         public OrderViewModel GetElement(OrderBindingModel model)
         {
@@ -97,6 +103,7 @@ namespace AircraftPlantDatabaseImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
+			order.ClientId = model.ClientId.Value;
             return order;
         }
         public OrderViewModel CreateModel(Order order, AircraftPlantDatabase context)
@@ -110,7 +117,9 @@ namespace AircraftPlantDatabaseImplement.Implements
                 Sum = order.Sum,
                 Status = order.Status.ToString(),
                 DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement
+                DateImplement = order.DateImplement,
+                ClientId = order.ClientId,
+                ClientFIO = order.Client.ClientFIO
             };
         }
     }

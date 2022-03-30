@@ -18,5 +18,6 @@ namespace AircraftPlantDatabaseImplement.Implements
 		public virtual DbSet<Plane> Planes { set; get; }
 		public virtual DbSet<PlaneComponent> PlaneComponents { set; get; }
 		public virtual DbSet<Order> Orders { set; get; }
+		public virtual DbSet<Client> Clients { set; get; }
 	}
 }
