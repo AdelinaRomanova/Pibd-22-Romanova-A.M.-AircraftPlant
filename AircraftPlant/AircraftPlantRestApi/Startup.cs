@@ -35,7 +35,8 @@ namespace AircraftPlantRestApi
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo
 				{
-					Title = "AircraftPlantRestApi", Version = "v1"
+					Title = "AircraftPlantRestApi",
+					Version = "v1"
 				});
 			});
 

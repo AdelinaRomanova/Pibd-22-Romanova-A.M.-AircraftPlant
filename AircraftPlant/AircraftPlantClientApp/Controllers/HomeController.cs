@@ -9,54 +9,54 @@ using System.Diagnostics;
 
 namespace AircraftPlantClientApp.Controllers
 {
-	public class HomeController : Controller
-	{
-		private readonly ILogger<HomeController> _logger;
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger)
-		{
-			_logger = logger;
-		}
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
 
-		public IActionResult Index()
-		{
-			if (Program.Client == null)
-			{
-				return Redirect("~/Home/Enter");
-			}
-			return View(APIClient.GetRequest<List<OrderViewModel>>($"api/main/getorders?clientId={Program.Client.Id}"));
-		}
+        public IActionResult Index()
+        {
+            if (Program.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View(APIClient.GetRequest<List<OrderViewModel>>($"api/main/getorders?clientId={Program.Client.Id}"));
+        }
 
-		[HttpGet]
-		public IActionResult Privacy()
-		{
-			if (Program.Client == null)
-			{
-				return Redirect("~/Home/Enter");
-			}
-			return View(Program.Client);
-		}
+        [HttpGet]
+        public IActionResult Privacy()
+        {
+            if (Program.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View(Program.Client);
+        }
 
-		[HttpPost]
-		public void Privacy(string login, string password, string fio)
-		{
-			if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(fio))
-			{
-				APIClient.PostRequest("api/client/updatedata", new ClientBindingModel
-				{
-					Id = Program.Client.Id,
-					ClientFIO = fio,
-					Email = login,
-					Password = password
-				});
-				Program.Client.ClientFIO = fio;
-				Program.Client.Email = login;
-				Program.Client.Password = password;
-				Response.Redirect("Index");
-				return;
-			}
-			throw new Exception("Введите логин, пароль и ФИО");
-		}
+        [HttpPost]
+        public void Privacy(string login, string password, string fio)
+        {
+            if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(fio))
+            {
+                APIClient.PostRequest("api/client/updatedata", new ClientBindingModel
+                {
+                    Id = Program.Client.Id,
+                    ClientFIO = fio,
+                    Email = login,
+                    Password = password
+                });
+                Program.Client.ClientFIO = fio;
+                Program.Client.Email = login;
+                Program.Client.Password = password;
+                Response.Redirect("Index");
+                return;
+            }
+            throw new Exception("Введите логин, пароль и ФИО");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -112,7 +112,7 @@ namespace AircraftPlantClientApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Dresses = APIClient.GetRequest<List<PlaneViewModel>>("api/main/getdresslist");
+            ViewBag.Planes = APIClient.GetRequest<List<PlaneViewModel>>("api/main/getdresslist");
             return View();
         }
 
