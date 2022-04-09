@@ -20,9 +20,9 @@ namespace AircraftPlantRestApi.Controllers
 			_plane = plane;
 		}
 		[HttpGet]
-		public List<PlaneViewModel> GetProductList() => _plane.Read(null)?.ToList();
+		public List<PlaneViewModel> GetPlaneList() => _plane.Read(null)?.ToList();
 		[HttpGet]
-		public PlaneViewModel GetProduct(int planeId) => _plane.Read(new PlaneBindingModel
+		public PlaneViewModel GetPlane(int planeId) => _plane.Read(new PlaneBindingModel
 		{ Id = planeId })?[0];
 		[HttpGet]
 		public List<OrderViewModel> GetOrders(int clientId) => _order.Read(new OrderBindingModel
