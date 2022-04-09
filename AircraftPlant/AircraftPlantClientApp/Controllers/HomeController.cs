@@ -112,7 +112,7 @@ namespace AircraftPlantClientApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Planes = APIClient.GetRequest<List<PlaneViewModel>>("api/main/getdresslist");
+            ViewBag.Planes = APIClient.GetRequest<List<PlaneViewModel>>("api/main/getplanelist");
             return View();
         }
 
@@ -129,6 +129,7 @@ namespace AircraftPlantClientApp.Controllers
                 PlaneId = plane,
                 Count = count,
                 Sum = sum
+                
             });
             Response.Redirect("Index");
         }
@@ -136,7 +137,7 @@ namespace AircraftPlantClientApp.Controllers
         [HttpPost]
         public decimal Calc(decimal count, int plane)
         {
-            PlaneViewModel _plane = APIClient.GetRequest<PlaneViewModel>($"api/main/getdress?dressId={plane}");
+            PlaneViewModel _plane = APIClient.GetRequest<PlaneViewModel>($"api/main/getplane?planeId={plane}");
             return count * _plane.Price;
         }
     }

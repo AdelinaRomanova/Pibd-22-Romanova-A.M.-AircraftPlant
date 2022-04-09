@@ -17,6 +17,7 @@ namespace AircraftPlantDatabaseImplement.Implements
             return context.Orders
             .Include(rec => rec.Planes)
             .Include(rec => rec.Client)
+            .ToList()
             .Select(CreateModel)
             .ToList();
         }
@@ -31,9 +32,10 @@ namespace AircraftPlantDatabaseImplement.Implements
             return context.Orders
                 .Include(rec => rec.Planes)
                 .Include(rec => rec.Client)
-                .Where(rec => rec.PlaneId == model.PlaneId
-                || (rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
-                || (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+                .ToList()
                 .Select(CreateModel)
                 .ToList();
         }
@@ -55,20 +57,40 @@ namespace AircraftPlantDatabaseImplement.Implements
         public void Insert(OrderBindingModel model)
         {
             using var context = new AircraftPlantDatabase();
-            context.Orders.Add(CreateModel(model, new Order()));
-            context.SaveChanges();
+            using var transaction = context.Database.BeginTransaction();
+            try
+            {
+                context.Orders.Add(CreateModel(model, new Order()));
+                context.SaveChanges();
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
 
         public void Update(OrderBindingModel model)
         {
             using var context = new AircraftPlantDatabase();
-            var element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
+            using var transaction = context.Database.BeginTransaction();
+            try
             {
-                throw new Exception("Element is not found");
+                var element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+                if (element == null)
+                {
+                    throw new Exception("Элемент не найден");
+                }
+                CreateModel(model, element);
+                context.SaveChanges();
+                transaction.Commit();
             }
-            CreateModel(model, element);
-            context.SaveChanges();
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
 
         public void Delete(OrderBindingModel model)
@@ -82,19 +104,19 @@ namespace AircraftPlantDatabaseImplement.Implements
             }
             else
             {
-                throw new Exception("Element is not found");
+                throw new Exception("Заказ не найден");
             }
         }
 
         private static Order CreateModel(OrderBindingModel model, Order order)
         {
             order.PlaneId = model.PlaneId;
+            order.ClientId = (int)model.ClientId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
-            order.ClientId = model.ClientId.Value;
             return order;
         }
 
@@ -103,15 +125,15 @@ namespace AircraftPlantDatabaseImplement.Implements
             return new OrderViewModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
+                ClientFIO = order.Client.ClientFIO,
                 PlaneId = order.PlaneId,
                 PlaneName = order.Planes.PlaneName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status.ToString(),
                 DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement,
-                ClientId = order.ClientId,
-                ClientFIO = order.Client.ClientFIO
+                DateImplement = order.DateImplement
             };
         }
     }
