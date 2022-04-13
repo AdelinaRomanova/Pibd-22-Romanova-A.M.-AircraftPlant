@@ -14,6 +14,8 @@ namespace AircraftPlantContracts.BindingModels
 		[DataMember]
 		public int PlaneId { get; set; }
 		[DataMember]
+		public int? ImplementerId { get; set; }
+		[DataMember]
 		public int Count { get; set; }
 		[DataMember]
 		public decimal Sum { get; set; }
@@ -27,6 +29,7 @@ namespace AircraftPlantContracts.BindingModels
 		public DateTime? DateFrom { get; set; }
 		[DataMember]
 		public DateTime? DateTo { get; set; }
-
+		[DataMember]
+		public OrderStatus? SearchStatus { get; set; }
 	}
 }
