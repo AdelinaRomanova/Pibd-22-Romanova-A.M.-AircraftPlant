@@ -150,5 +150,6 @@ namespace AircraftPlantView
 			var form = Program.Container.Resolve<FormClients>();
 			form.ShowDialog();
 		}
+
     }
 }
