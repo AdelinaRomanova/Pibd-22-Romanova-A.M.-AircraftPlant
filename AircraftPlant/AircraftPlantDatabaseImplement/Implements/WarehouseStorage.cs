@@ -17,7 +17,10 @@ namespace AircraftPlantDatabaseImplement.Implements
         {
             using (var context = new AircraftPlantDatabase())
             {
-                return context.Warehouses.Include(rec => rec.WarehouseComponents).ThenInclude(rec => rec.Component).ToList().Select(CreateModel).ToList();
+                return context.Warehouses.Include(rec => rec.WarehouseComponents).ThenInclude(rec => rec.Component)
+                    .ToList()
+                    .Select(CreateModel)
+                    .ToList();
             }
         }
         public List<WarehouseViewModel> GetFilteredList(WarehouseBindingModel model)
@@ -28,7 +31,10 @@ namespace AircraftPlantDatabaseImplement.Implements
             }
             using (var context = new AircraftPlantDatabase())
             {
-                return context.Warehouses.Include(rec => rec.WarehouseComponents).ThenInclude(rec => rec.Component).Where(rec => rec.WarehouseName.Contains(model.WarehouseName)).ToList().Select(CreateModel).ToList();
+                return context.Warehouses
+                    .Include(rec => rec.WarehouseComponents)
+                    .ThenInclude(rec => rec.Component)
+                    .Where(rec => rec.WarehouseName.Contains(model.WarehouseName)).ToList().Select(CreateModel).ToList();
             }
         }
         public WarehouseViewModel GetElement(WarehouseBindingModel model)
@@ -122,7 +128,8 @@ namespace AircraftPlantDatabaseImplement.Implements
             if (model.Id.HasValue)
             {
                 var warehouseComponents = context.WarehouseComponents.Where(rec => rec.WarehouseId == model.Id.Value).ToList();
-                context.WarehouseComponents.RemoveRange(warehouseComponents.Where(rec => !model.WarehouseComponents.ContainsKey(rec.ComponentId)).ToList());
+                context.WarehouseComponents.RemoveRange(warehouseComponents
+                    .Where(rec => !model.WarehouseComponents.ContainsKey(rec.ComponentId)).ToList());
                 context.SaveChanges();
                 foreach (var updateComponent in warehouseComponents)
                 {
