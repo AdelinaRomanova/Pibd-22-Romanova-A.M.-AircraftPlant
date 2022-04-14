@@ -59,6 +59,28 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.ToTable("Components");
                 });
 
+            modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Implementer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("ImplementerFIO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PauseTime")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkingTime")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Implementers");
+                });
+
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -78,6 +100,9 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.Property<DateTime?>("DateImplement")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ImplementerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PlaneId")
                         .HasColumnType("int");
 
@@ -90,6 +115,8 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("ImplementerId");
 
                     b.HasIndex("PlaneId");
 
@@ -148,6 +175,10 @@ namespace AircraftPlantDatabaseImplement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AircraftPlantDatabaseImplement.Models.Implementer", "Implementer")
+                        .WithMany("Orders")
+                        .HasForeignKey("ImplementerId");
+
                     b.HasOne("AircraftPlantDatabaseImplement.Models.Plane", "Planes")
                         .WithMany("Orders")
                         .HasForeignKey("PlaneId")
@@ -155,6 +186,8 @@ namespace AircraftPlantDatabaseImplement.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+
+                    b.Navigation("Implementer");
 
                     b.Navigation("Planes");
                 });
@@ -186,6 +219,11 @@ namespace AircraftPlantDatabaseImplement.Migrations
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Component", b =>
                 {
                     b.Navigation("PlaneComponents");
+                });
+
+            modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Implementer", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Plane", b =>

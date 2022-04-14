@@ -60,7 +60,8 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 				DateCreate = order.DateCreate,
 				DateImplement = DateTime.Now,
 				Status = OrderStatus.Выполняется,
-				ClientId = order.ClientId
+				ClientId = order.ClientId,
+				ImplementerId = model.ImplementerId
 			});
 		}
 		public void FinishOrder(ChangeStatusBindingModel model)
@@ -83,7 +84,8 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 				DateCreate = order.DateCreate,
 				DateImplement = order.DateImplement,
 				Status = OrderStatus.Готов,
-				ClientId = order.ClientId
+				ClientId = order.ClientId,
+				ImplementerId = order.ImplementerId
 			});
 		}
 		public void DeliveryOrder(ChangeStatusBindingModel model)
@@ -101,6 +103,7 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 			{
 				Id = order.Id,
 				PlaneId = order.PlaneId,
+				ImplementerId = order.ImplementerId,
 				Count = order.Count,
 				Sum = order.Sum,
 				DateCreate = order.DateCreate,
