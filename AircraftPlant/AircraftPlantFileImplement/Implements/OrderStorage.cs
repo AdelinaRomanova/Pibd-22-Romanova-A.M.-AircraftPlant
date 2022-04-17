@@ -17,15 +17,25 @@ namespace AircraftPlantFileImplement.Implements
         {
             source = FileDataListSingleton.GetInstance();
         }
-        public List<OrderViewModel> GetFullList() => source.Orders.Select(CreateModel).ToList();
-        public List<OrderViewModel> GetFilteredList(OrderBindingModel model) => model == null ?
-            null : source.Orders.Where(rec => rec.Status.Equals(model.Status)).Select(CreateModel).ToList();
+        public List<OrderViewModel> GetFullList()
+        {
+            return source.Orders.Select(CreateModel).ToList();
+        }
+        public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+            return source.Orders.Where(rec => rec.PlaneId == model.PlaneId ||
+                 (rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)).Select(CreateModel).ToList();
+        }
         public OrderViewModel GetElement(OrderBindingModel model)
         {
             if (model == null) return null;
 
             var order = source.Orders
-            .FirstOrDefault(rec => rec.Status == model.Status || rec.Id == model.Id);
+            .FirstOrDefault(rec => rec.Id == model.Id);
 
             return order != null ? CreateModel(order) : null;
         }

@@ -33,6 +33,10 @@ namespace AircraftPlantView
 			this.справочникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.компонентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.изделияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.отчётыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ComponentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ComponentProductsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.OredersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dataGridView = new System.Windows.Forms.DataGridView();
 			this.buttonCreateOrder = new System.Windows.Forms.Button();
 			this.buttonTakeOrder = new System.Windows.Forms.Button();
@@ -47,7 +51,8 @@ namespace AircraftPlantView
 			// 
 			this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.справочникиToolStripMenuItem});
+            this.справочникиToolStripMenuItem,
+            this.отчётыToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(1209, 28);
@@ -66,7 +71,7 @@ namespace AircraftPlantView
 			// компонентыToolStripMenuItem
 			// 
 			this.компонентыToolStripMenuItem.Name = "компонентыToolStripMenuItem";
-			this.компонентыToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.компонентыToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
 			this.компонентыToolStripMenuItem.Text = "Компоненты";
 			this.компонентыToolStripMenuItem.Click += new System.EventHandler(this.компонентыToolStripMenuItem_Click);
 			// 
@@ -76,6 +81,37 @@ namespace AircraftPlantView
 			this.изделияToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.изделияToolStripMenuItem.Text = "Изделия";
 			this.изделияToolStripMenuItem.Click += new System.EventHandler(this.изделияToolStripMenuItem_Click);
+			// 
+			// отчётыToolStripMenuItem
+			// 
+			this.отчётыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ComponentsToolStripMenuItem,
+            this.ComponentProductsToolStripMenuItem,
+            this.OredersToolStripMenuItem});
+			this.отчётыToolStripMenuItem.Name = "отчётыToolStripMenuItem";
+			this.отчётыToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
+			this.отчётыToolStripMenuItem.Text = "Отчёты";
+			// 
+			// ComponentsToolStripMenuItem
+			// 
+			this.ComponentsToolStripMenuItem.Name = "ComponentsToolStripMenuItem";
+			this.ComponentsToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+			this.ComponentsToolStripMenuItem.Text = "Список компонентов";
+			this.ComponentsToolStripMenuItem.Click += new System.EventHandler(this.ComponentsToolStripMenuItem_Click);
+			// 
+			// ComponentProductsToolStripMenuItem
+			// 
+			this.ComponentProductsToolStripMenuItem.Name = "ComponentProductsToolStripMenuItem";
+			this.ComponentProductsToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+			this.ComponentProductsToolStripMenuItem.Text = "Компоненты по изделиям";
+			this.ComponentProductsToolStripMenuItem.Click += new System.EventHandler(this.ComponentProductsToolStripMenuItem_Click);
+			// 
+			// OredersToolStripMenuItem
+			// 
+			this.OredersToolStripMenuItem.Name = "OredersToolStripMenuItem";
+			this.OredersToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+			this.OredersToolStripMenuItem.Text = "Список заказов";
+			this.OredersToolStripMenuItem.Click += new System.EventHandler(this.OredersToolStripMenuItem_Click);
 			// 
 			// dataGridView
 			// 
@@ -174,5 +210,9 @@ namespace AircraftPlantView
 		private System.Windows.Forms.Button buttonRef;
 		private System.Windows.Forms.ToolStripMenuItem компонентыToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem изделияToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem отчётыToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem ComponentsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem ComponentProductsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem OredersToolStripMenuItem;
 	}
 }

@@ -13,7 +13,7 @@ namespace AircraftPlantDatabaseImplement.Models
 
 		[Required]
 		public decimal Price { get; set; }
-		
+
 		[ForeignKey("PlaneId")]
 		public virtual List<PlaneComponent> PlaneComponents { get; set; }
 
