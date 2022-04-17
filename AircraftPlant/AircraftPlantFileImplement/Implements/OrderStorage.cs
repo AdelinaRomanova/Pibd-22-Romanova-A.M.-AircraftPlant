@@ -35,7 +35,7 @@ namespace AircraftPlantFileImplement.Implements
             if (model == null) return null;
 
             var order = source.Orders
-            .FirstOrDefault(rec => rec.Status == model.Status || rec.Id == model.Id);
+            .FirstOrDefault(rec => rec.Id == model.Id);
 
             return order != null ? CreateModel(order) : null;
         }
