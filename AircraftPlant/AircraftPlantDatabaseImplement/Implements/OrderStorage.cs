@@ -16,17 +16,8 @@ namespace AircraftPlantDatabaseImplement.Implements
             using var context = new AircraftPlantDatabase();
             return context.Orders.
                 Include(rec => rec.Planes)
-                .Select(rec => new OrderViewModel
-                {
-                    Id = rec.Id,
-                    PlaneId = rec.PlaneId,
-                    PlaneName = rec.Planes.PlaneName,
-                    Count = rec.Count,
-                    Sum = rec.Sum,
-                    Status = rec.Status.ToString(),
-                    DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement
-                }).ToList();
+                .Select(CreateModel)
+                .ToList();
         }
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
         {
@@ -35,17 +26,10 @@ namespace AircraftPlantDatabaseImplement.Implements
                 return null;
             }
             using var context = new AircraftPlantDatabase();
-            return context.Orders.Include(rec => rec.Planes).Where(rec => rec.PlaneId == model.PlaneId).Select(rec => new OrderViewModel
-            {
-                Id = rec.Id,
-                PlaneId = rec.PlaneId,
-                PlaneName = rec.Planes.PlaneName,
-                Count = rec.Count,
-                Sum = rec.Sum,
-                Status = rec.Status.ToString(),
-                DateCreate = rec.DateCreate,
-                DateImplement = rec.DateImplement
-            }).ToList();
+            return context.Orders.Include(rec => rec.Planes)
+                .Where(rec => rec.PlaneId == model.PlaneId)
+                .Select(CreateModel)
+                .ToList();
         }
         public OrderViewModel GetElement(OrderBindingModel model)
         {
@@ -55,7 +39,7 @@ namespace AircraftPlantDatabaseImplement.Implements
             }
             using var context = new AircraftPlantDatabase();
             var order = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
-            return order != null ? CreateModel(order, context) : null;
+            return order != null ? CreateModel(order) : null;
         }
         public void Insert(OrderBindingModel model)
         {
@@ -79,11 +63,10 @@ namespace AircraftPlantDatabaseImplement.Implements
             using var transaction = context.Database.BeginTransaction();
             try
             {
-                var element = context.Orders.FirstOrDefault(rec => rec.Id ==
-                model.Id);
+                var element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element == null)
                 {
-                    throw new Exception("Элемент не найден");
+                    throw new Exception("Заказ не найден");
                 }
                 CreateModel(model, element);
                 context.SaveChanges();
@@ -106,7 +89,7 @@ namespace AircraftPlantDatabaseImplement.Implements
             }
             else
             {
-                throw new Exception("Элемент не найден");
+                throw new Exception("Заказ не найден");
             }
         }
         public static Order CreateModel(OrderBindingModel model, Order order)
@@ -119,13 +102,13 @@ namespace AircraftPlantDatabaseImplement.Implements
             order.DateImplement = model.DateImplement;
             return order;
         }
-        public OrderViewModel CreateModel(Order order, AircraftPlantDatabase context)
+        public OrderViewModel CreateModel(Order order)
         {
             return new OrderViewModel
             {
                 Id = order.Id,
                 PlaneId = order.PlaneId,
-                PlaneName = context.Planes.FirstOrDefault(rec => rec.Id == order.PlaneId)?.PlaneName,
+                PlaneName = order.Planes.PlaneName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status.ToString(),
