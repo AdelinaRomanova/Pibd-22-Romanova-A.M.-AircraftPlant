@@ -55,9 +55,16 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 				throw new Exception("Заказ не в статусе \"Принят\"");
 			}
 			var plane = _planeStorage.GetElement(new PlaneBindingModel { Id = order.PlaneId });
-			if (!_warehouseStorage.CheckComponentsCount(order.Count, plane.PlaneComponents))
+			try
 			{
-				throw new Exception("Недостаточно компонентов на складе!");
+				if (!_warehouseStorage.CheckComponentsCount(order.Count, plane.PlaneComponents))
+				{
+					throw new Exception("Недостаточно компонентов на складе!");
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
 			}
 			_orderStorage.Update(new OrderBindingModel
 			{
