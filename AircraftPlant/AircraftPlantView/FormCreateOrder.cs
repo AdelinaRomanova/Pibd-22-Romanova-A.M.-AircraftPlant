@@ -5,6 +5,7 @@ using AircraftPlantContracts.ViewModels;
 using AircraftPlantBusinessLogic.BusinessLogics;
 using System.Windows.Forms;
 using Unity;
+using System.Collections.Generic;
 
 namespace AircraftPlantView
 {
@@ -12,24 +13,44 @@ namespace AircraftPlantView
 	{
         private readonly IPlaneLogic _logicP;
 		private readonly IOrderLogic _logicO;
-		public FormCreateOrder(PlaneLogic logicP, OrderLogic logicO)
+        private readonly IClientLogic _logicC;
+        public FormCreateOrder(PlaneLogic logicP, OrderLogic logicO, IClientLogic logicC)
 		{
 			InitializeComponent();
 			_logicP = logicP;
 			_logicO = logicO;
-		}
+            _logicC = logicC;
+        }
 		private void FormCreateOrder_Load(object sender, EventArgs e)
 		{
             try
             {
-                var list = _logicP.Read(null);
+                List<ClientViewModel> listClients = _logicC.Read(null);
+                if (listClients != null)
+                {
+                    comboBoxClient.DisplayMember = "ClientFIO";
+                    comboBoxClient.ValueMember = "Id";
+                    comboBoxClient.DataSource = listClients;
+                    comboBoxClient.SelectedItem = null;
+                }
+                else
+                {
+                    throw new Exception("Не удалось загрузить список клиентов");
+                }
+
+                List<PlaneViewModel> list = _logicP.Read(null);
                 if (list != null)
                 {
                     comboBoxPlane.DisplayMember = "PlaneName";
                     comboBoxPlane.ValueMember = "Id";
-                    comboBoxPlane.DataSource = list;                    
+                    comboBoxPlane.DataSource = list;
                     comboBoxPlane.SelectedItem = null;
                 }
+                else
+                {
+                    throw new Exception("Не удалось загрузить список изделий");
+                }
+
             }
             catch (Exception ex)
             {
@@ -73,10 +94,16 @@ namespace AircraftPlantView
                 MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (comboBoxClient.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите клиента", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             try
             {
                 _logicO.CreateOrder(new CreateOrderBindingModel
                 {
+                    ClientId = Convert.ToInt32(comboBoxClient.SelectedValue),
                     PlaneId = Convert.ToInt32(comboBoxPlane.SelectedValue),
                     Count = Convert.ToInt32(textBoxCount.Text),
                     Sum = Convert.ToDecimal(textBoxSum.Text)

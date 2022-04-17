@@ -9,7 +9,7 @@ namespace AircraftPlantDatabaseImplement.Implements
 		{
 			if (optionsBuilder.IsConfigured == false)
 			{
-				optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-5SU5L3MT\SQLEXPRESS;Initial Catalog=AircraftPlantDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
+				optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-5SU5L3MT\SQLEXPRESS01;Initial Catalog=AircraftPlantDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
 			}
 			base.OnConfiguring(optionsBuilder);
 		}
@@ -18,5 +18,6 @@ namespace AircraftPlantDatabaseImplement.Implements
 		public virtual DbSet<Plane> Planes { set; get; }
 		public virtual DbSet<PlaneComponent> PlaneComponents { set; get; }
 		public virtual DbSet<Order> Orders { set; get; }
+		public virtual DbSet<Client> Clients { set; get; }
 	}
 }
