@@ -19,7 +19,7 @@ namespace AircraftPlantFileImplement.Implements
         }
         public List<OrderViewModel> GetFullList() => source.Orders.Select(CreateModel).ToList();
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model) => model == null ?
-            null : source.Orders.Where(rec => rec.Status.Equals(model.Status)).Select(CreateModel).ToList();
+            null : source.Orders.Where(rec => rec.PlaneId.ToString().Contains(model.PlaneId.ToString())).Select(CreateModel).ToList();
         public OrderViewModel GetElement(OrderBindingModel model)
         {
             if (model == null) return null;
@@ -44,7 +44,7 @@ namespace AircraftPlantFileImplement.Implements
         {
             var element = source.Orders.FirstOrDefault(rec => rec.Id == model.Id);
 
-            if (element == null) throw new Exception("Элемент не найден");
+            if (element == null) throw new Exception("Заказ не найден");
 
             CreateModel(model, element);
         }
@@ -58,7 +58,7 @@ namespace AircraftPlantFileImplement.Implements
             }
             else
             {
-                throw new Exception("Элемент не найден");
+                throw new Exception("Заказ не найден");
             }
         }
         private Order CreateModel(OrderBindingModel model, Order order)

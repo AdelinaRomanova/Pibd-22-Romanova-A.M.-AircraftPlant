@@ -52,7 +52,7 @@ namespace AircraftPlantFileImplement.Implements
             var element = source.Warehouses.FirstOrDefault(rec => rec.Id == model.Id);
             if (element == null)
             {
-                throw new Exception("Элемент не найден");
+                throw new Exception("Склад не найден");
             }
             CreateModel(model, element);
         }
@@ -65,7 +65,7 @@ namespace AircraftPlantFileImplement.Implements
             }
             else
             {
-                throw new Exception("Элемент не найден");
+                throw new Exception("Склад не найден");
             }
         }
         private static Warehouse CreateModel(WarehouseBindingModel model, Warehouse warehouse)
@@ -101,8 +101,9 @@ namespace AircraftPlantFileImplement.Implements
                 WarehouseName = warehouse.WarehouseName,
                 Responsible = warehouse.Responsible,
                 DateCreate = warehouse.DateCreate,
-                WarehouseComponents = warehouse.WarehouseComponents.ToDictionary(recPC => recPC.Key, recPC => (source.Components.FirstOrDefault(recC => recC.Id ==
-                 recPC.Key)?.ComponentName, recPC.Value))
+                WarehouseComponents = warehouse.WarehouseComponents
+                .ToDictionary(recPC => recPC.Key, recPC => (source.Components
+                .FirstOrDefault(recC => recC.Id == recPC.Key)?.ComponentName, recPC.Value))
             };
         }
 
