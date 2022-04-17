@@ -84,7 +84,7 @@ namespace AircraftPlantDatabaseImplement.Implements
                 var element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element == null)
                 {
-                    throw new Exception("Элемент не найден");
+                    throw new Exception("Заказ не найден");
                 }
                 CreateModel(model, element);
                 context.SaveChanges();
