@@ -16,20 +16,51 @@ namespace AircraftPlantDatabaseImplement.Implements
             using var context = new AircraftPlantDatabase();
             return context.Orders.
                 Include(rec => rec.Planes)
+                .ToList()
                 .Select(CreateModel)
                 .ToList();
-        }
-        public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
-        {
-            if (model == null)
+                    PlaneId = rec.PlaneId,
+                    PlaneName = rec.Planes.PlaneName,
+                    Count = rec.Count,
+                    Sum = rec.Sum,
+                    Status = rec.Status.ToString(),
+                    DateCreate = rec.DateCreate,
+                    DateImplement = rec.DateImplement
+                }).ToList();
+            return context.Orders.Include(rec => rec.Planes)
+                .Where(rec => rec.PlaneId == model.PlaneId || (rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo))
+                .Select(CreateModel)
+                .ToList();
+                    Status = rec.Status.ToString(),
+                    DateCreate = rec.DateCreate,
+                    DateImplement = rec.DateImplement
+                }).ToList();
+            return context.Orders.Include(rec => rec.Planes).Where(rec => rec.PlaneId == model.PlaneId).Select(rec => new OrderViewModel
+            {
+                Id = rec.Id,
+                PlaneId = rec.PlaneId,
+                PlaneName = rec.Planes.PlaneName,
+                Count = rec.Count,
+                Sum = rec.Sum,
+                Status = rec.Status.ToString(),
+                DateCreate = rec.DateCreate,
+                DateImplement = rec.DateImplement
+            }).ToList();
             {
                 return null;
             }
             using var context = new AircraftPlantDatabase();
-            return context.Orders.Include(rec => rec.Planes)
-                .Where(rec => rec.PlaneId == model.PlaneId)
-                .Select(CreateModel)
-                .ToList();
+            return context.Orders.Include(rec => rec.Planes).Where(rec => rec.PlaneId == model.PlaneId).Select(rec => new OrderViewModel
+            {
+                Id = rec.Id,
+                PlaneId = rec.PlaneId,
+                PlaneName = rec.Planes.PlaneName,
+                Count = rec.Count,
+                Sum = rec.Sum,
+                Status = rec.Status.ToString(),
+                DateCreate = rec.DateCreate,
+                DateImplement = rec.DateImplement
+            }).ToList();
         }
         public OrderViewModel GetElement(OrderBindingModel model)
         {
