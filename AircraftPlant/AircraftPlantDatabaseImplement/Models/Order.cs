@@ -21,6 +21,7 @@ namespace AircraftPlantDatabaseImplement.Models
 		public DateTime? DateImplement { get; set; }
 
 		public virtual Plane Planes { get; set; }
+		public virtual Client Client { get; set; }
 
 	}
 }

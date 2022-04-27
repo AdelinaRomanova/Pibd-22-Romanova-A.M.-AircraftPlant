@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AircraftPlantDatabaseImplement.Migrations
 {
     [DbContext(typeof(AircraftPlantDatabase))]
-    [Migration("20220316172620_InitialCreate")]
+    [Migration("20220409155708_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,30 @@ namespace AircraftPlantDatabaseImplement.Migrations
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
+
+            modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Client", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("ClientFIO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clients");
+                });
 
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Component", b =>
                 {
@@ -44,6 +68,9 @@ namespace AircraftPlantDatabaseImplement.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
@@ -63,6 +90,8 @@ namespace AircraftPlantDatabaseImplement.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("PlaneId");
 
@@ -115,11 +144,19 @@ namespace AircraftPlantDatabaseImplement.Migrations
 
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Order", b =>
                 {
+                    b.HasOne("AircraftPlantDatabaseImplement.Models.Client", "Client")
+                        .WithMany("Orders")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AircraftPlantDatabaseImplement.Models.Plane", "Planes")
                         .WithMany("Orders")
                         .HasForeignKey("PlaneId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Client");
 
                     b.Navigation("Planes");
                 });
@@ -141,6 +178,11 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.Navigation("Component");
 
                     b.Navigation("Plane");
+                });
+
+            modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Client", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Component", b =>

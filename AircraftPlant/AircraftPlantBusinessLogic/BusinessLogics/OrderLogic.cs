@@ -11,11 +11,14 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 	public class OrderLogic : IOrderLogic
 	{
 		private readonly IOrderStorage _orderStorage;
+		private readonly IClientStorage _clientStorage;
+		public OrderLogic(IOrderStorage orderStorage, IClientStorage clientStorage)
 		private readonly IWarehouseStorage _warehouseStorage;
 		private readonly IPlaneStorage _planeStorage;
 		public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage, IPlaneStorage planeStorage)
 		{
 			_orderStorage = orderStorage;
+			_clientStorage = clientStorage;
 			_warehouseStorage = warehouseStorage;
 			_planeStorage = planeStorage;
 		}
@@ -39,7 +42,8 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 				Count = model.Count,
 				Sum = model.Sum,
 				DateCreate = DateTime.Now,
-				Status = OrderStatus.Принят
+				Status = OrderStatus.Принят,
+				ClientId = model.ClientId
 			});
 		}
 		public void TakeOrderInWork(ChangeStatusBindingModel model)
@@ -74,7 +78,8 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 				Sum = order.Sum,
 				DateCreate = order.DateCreate,
 				DateImplement = DateTime.Now,
-				Status = OrderStatus.Выполняется
+				Status = OrderStatus.Выполняется,
+				ClientId = order.ClientId
 			});
 		}
 		public void FinishOrder(ChangeStatusBindingModel model)
@@ -96,7 +101,8 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 				Sum = order.Sum,
 				DateCreate = order.DateCreate,
 				DateImplement = order.DateImplement,
-				Status = OrderStatus.Готов
+				Status = OrderStatus.Готов,
+				ClientId = order.ClientId
 			});
 		}
 		public void DeliveryOrder(ChangeStatusBindingModel model)
@@ -118,7 +124,8 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 				Sum = order.Sum,
 				DateCreate = order.DateCreate,
 				DateImplement = order.DateImplement,
-				Status = OrderStatus.Выдан
+				Status = OrderStatus.Выдан,
+				ClientId = order.ClientId
 			});
 		}
 	}

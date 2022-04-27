@@ -37,12 +37,14 @@ namespace AircraftPlantView
 			this.textBoxSum = new System.Windows.Forms.TextBox();
 			this.buttonSave = new System.Windows.Forms.Button();
 			this.buttonCancel = new System.Windows.Forms.Button();
+			this.labelClient = new System.Windows.Forms.Label();
+			this.comboBoxClient = new System.Windows.Forms.ComboBox();
 			this.SuspendLayout();
 			// 
 			// labelName
 			// 
 			this.labelName.AutoSize = true;
-			this.labelName.Location = new System.Drawing.Point(23, 20);
+			this.labelName.Location = new System.Drawing.Point(23, 56);
 			this.labelName.Name = "labelName";
 			this.labelName.Size = new System.Drawing.Size(71, 20);
 			this.labelName.TabIndex = 0;
@@ -51,7 +53,7 @@ namespace AircraftPlantView
 			// labelCount
 			// 
 			this.labelCount.AutoSize = true;
-			this.labelCount.Location = new System.Drawing.Point(23, 60);
+			this.labelCount.Location = new System.Drawing.Point(23, 96);
 			this.labelCount.Name = "labelCount";
 			this.labelCount.Size = new System.Drawing.Size(93, 20);
 			this.labelCount.TabIndex = 1;
@@ -60,7 +62,7 @@ namespace AircraftPlantView
 			// labelSum
 			// 
 			this.labelSum.AutoSize = true;
-			this.labelSum.Location = new System.Drawing.Point(23, 97);
+			this.labelSum.Location = new System.Drawing.Point(23, 133);
 			this.labelSum.Name = "labelSum";
 			this.labelSum.Size = new System.Drawing.Size(55, 20);
 			this.labelSum.TabIndex = 2;
@@ -68,7 +70,7 @@ namespace AircraftPlantView
 			// 
 			// textBoxCount
 			// 
-			this.textBoxCount.Location = new System.Drawing.Point(122, 57);
+			this.textBoxCount.Location = new System.Drawing.Point(122, 93);
 			this.textBoxCount.Name = "textBoxCount";
 			this.textBoxCount.Size = new System.Drawing.Size(332, 27);
 			this.textBoxCount.TabIndex = 4;
@@ -77,7 +79,7 @@ namespace AircraftPlantView
 			// comboBoxPlane
 			// 
 			this.comboBoxPlane.FormattingEnabled = true;
-			this.comboBoxPlane.Location = new System.Drawing.Point(122, 17);
+			this.comboBoxPlane.Location = new System.Drawing.Point(122, 53);
 			this.comboBoxPlane.Name = "comboBoxPlane";
 			this.comboBoxPlane.Size = new System.Drawing.Size(332, 28);
 			this.comboBoxPlane.TabIndex = 5;
@@ -85,14 +87,14 @@ namespace AircraftPlantView
 			// 
 			// textBoxSum
 			// 
-			this.textBoxSum.Location = new System.Drawing.Point(122, 94);
+			this.textBoxSum.Location = new System.Drawing.Point(122, 130);
 			this.textBoxSum.Name = "textBoxSum";
 			this.textBoxSum.Size = new System.Drawing.Size(332, 27);
 			this.textBoxSum.TabIndex = 6;
 			// 
 			// buttonSave
 			// 
-			this.buttonSave.Location = new System.Drawing.Point(260, 127);
+			this.buttonSave.Location = new System.Drawing.Point(260, 163);
 			this.buttonSave.Name = "buttonSave";
 			this.buttonSave.Size = new System.Drawing.Size(94, 29);
 			this.buttonSave.TabIndex = 7;
@@ -102,7 +104,7 @@ namespace AircraftPlantView
 			// 
 			// buttonCancel
 			// 
-			this.buttonCancel.Location = new System.Drawing.Point(360, 127);
+			this.buttonCancel.Location = new System.Drawing.Point(360, 163);
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.Size = new System.Drawing.Size(94, 29);
 			this.buttonCancel.TabIndex = 8;
@@ -110,11 +112,30 @@ namespace AircraftPlantView
 			this.buttonCancel.UseVisualStyleBackColor = true;
 			this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
 			// 
+			// labelClient
+			// 
+			this.labelClient.AutoSize = true;
+			this.labelClient.Location = new System.Drawing.Point(27, 16);
+			this.labelClient.Name = "labelClient";
+			this.labelClient.Size = new System.Drawing.Size(58, 20);
+			this.labelClient.TabIndex = 9;
+			this.labelClient.Text = "Клиент";
+			// 
+			// comboBoxClient
+			// 
+			this.comboBoxClient.FormattingEnabled = true;
+			this.comboBoxClient.Location = new System.Drawing.Point(123, 17);
+			this.comboBoxClient.Name = "comboBoxClient";
+			this.comboBoxClient.Size = new System.Drawing.Size(331, 28);
+			this.comboBoxClient.TabIndex = 10;
+			// 
 			// FormCreateOrder
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(498, 167);
+			this.ClientSize = new System.Drawing.Size(498, 212);
+			this.Controls.Add(this.comboBoxClient);
+			this.Controls.Add(this.labelClient);
 			this.Controls.Add(this.buttonCancel);
 			this.Controls.Add(this.buttonSave);
 			this.Controls.Add(this.textBoxSum);
@@ -141,5 +162,7 @@ namespace AircraftPlantView
 		private System.Windows.Forms.TextBox textBoxSum;
 		private System.Windows.Forms.Button buttonSave;
 		private System.Windows.Forms.Button buttonCancel;
+		private System.Windows.Forms.Label labelClient;
+		private System.Windows.Forms.ComboBox comboBoxClient;
 	}
 }
