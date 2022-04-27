@@ -11,9 +11,11 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 	public class OrderLogic : IOrderLogic
 	{
 		private readonly IOrderStorage _orderStorage;
-		public OrderLogic(IOrderStorage orderStorage)
+		private readonly IClientStorage _clientStorage;
+		public OrderLogic(IOrderStorage orderStorage, IClientStorage clientStorage)
 		{
 			_orderStorage = orderStorage;
+			_clientStorage = clientStorage;
 		}
 		public List<OrderViewModel> Read(OrderBindingModel model)
 		{
