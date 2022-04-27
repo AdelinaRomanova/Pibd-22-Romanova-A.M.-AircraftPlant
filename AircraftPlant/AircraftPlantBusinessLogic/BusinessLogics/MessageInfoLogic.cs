@@ -12,22 +12,22 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 {
     public class MessageInfoLogic : IMessageInfoLogic
     {
-        private readonly IMessageInfoStorage _messageInfoStorage;
+        private readonly IMessageInfoStorage messageInfoStorage;
         public MessageInfoLogic(IMessageInfoStorage messageInfoStorage)
         {
-            _messageInfoStorage = messageInfoStorage;
+            this.messageInfoStorage = messageInfoStorage;
         }
         public List<MessageInfoViewModel> Read(MessageInfoBindingModel model)
         {
             if (model == null)
             {
-                return _messageInfoStorage.GetFullList();
+                return messageInfoStorage.GetFullList();
             }
-            return _messageInfoStorage.GetFilteredList(model);
+            return messageInfoStorage.GetFilteredList(model);
         }
         public void CreateOrUpdate(MessageInfoBindingModel model)
         {
-            _messageInfoStorage.Insert(model);
+            messageInfoStorage.Insert(model);
         }
     }
 }

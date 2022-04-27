@@ -14,18 +14,14 @@ namespace AircraftPlantBusinessLogic.MailWorker
 {
     public class MailKitWorker : AbstractMailWorker
     {
-        public MailKitWorker(IMessageInfoLogic messageInfoLogic) 
-            : base(messageInfoLogic)
-        {
-        }
-
+        public MailKitWorker(IMessageInfoLogic messageInfoLogic) : base(messageInfoLogic) { }
         protected override async Task SendMailAsync(MailSendInfoBindingModel info)
         {
             using var objMailMessage = new MailMessage();
-            using var objSmtpClient = new SmtpClient(_smtpClientHost, _smtpClientPort);
+            using var objSmtpClient = new SmtpClient(smtpClientHost, smtpClientPort);
             try
             {
-                objMailMessage.From = new MailAddress(_mailLogin);
+                objMailMessage.From = new MailAddress(mailLogin);
                 objMailMessage.To.Add(new MailAddress(info.MailAddress));
                 objMailMessage.Subject = info.Subject;
                 objMailMessage.Body = info.Text;
@@ -34,7 +30,7 @@ namespace AircraftPlantBusinessLogic.MailWorker
                 objSmtpClient.UseDefaultCredentials = false;
                 objSmtpClient.EnableSsl = true;
                 objSmtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                objSmtpClient.Credentials = new NetworkCredential(_mailLogin, _mailPassword);
+                objSmtpClient.Credentials = new NetworkCredential(mailLogin, mailPassword);
                 await Task.Run(() => objSmtpClient.Send(objMailMessage));
             }
             catch (Exception)
@@ -42,7 +38,6 @@ namespace AircraftPlantBusinessLogic.MailWorker
                 throw;
             }
         }
-
         protected override async Task<List<MessageInfoBindingModel>> ReceiveMailAsync()
         {
             var list = new List<MessageInfoBindingModel>();
@@ -51,8 +46,8 @@ namespace AircraftPlantBusinessLogic.MailWorker
             {
                 try
                 {
-                    client.Connect(_popHost, _popPort, SecureSocketOptions.SslOnConnect);
-                    client.Authenticate(_mailLogin, _mailPassword);
+                    client.Connect(popHost, popPort, SecureSocketOptions.SslOnConnect);
+                    client.Authenticate(mailLogin, mailPassword);
                     for (int i = 0; i < client.Count; i++)
                     {
                         var message = client.GetMessage(i);
@@ -77,5 +72,4 @@ namespace AircraftPlantBusinessLogic.MailWorker
             return list;
         }
     }
-
 }

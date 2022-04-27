@@ -10,34 +10,33 @@ namespace AircraftPlantBusinessLogic.MailWorker
 {
     public abstract class AbstractMailWorker
     {
-        protected string _mailLogin;
-        protected string _mailPassword;
-        protected string _smtpClientHost;
-        protected int _smtpClientPort;
-        protected string _popHost;
-        protected int _popPort;
-        private IMessageInfoLogic _messageInfoLogic;
-
+        protected string mailLogin;
+        protected string mailPassword;
+        protected string smtpClientHost;
+        protected int smtpClientPort;
+        protected string popHost;
+        protected int popPort;
+        private IMessageInfoLogic messageInfoLogic;
         public AbstractMailWorker(IMessageInfoLogic messageInfoLogic)
         {
-            _messageInfoLogic = messageInfoLogic;
+            this.messageInfoLogic = messageInfoLogic;
         }
         public void MailConfig(MailConfigBindingModel config)
         {
-            _mailLogin = config.MailLogin;
-            _mailPassword = config.MailPassword;
-            _smtpClientHost = config.SmtpClientHost;
-            _smtpClientPort = config.SmtpClientPort;
-            _popHost = config.PopHost;
-            _popPort = config.PopPort;
+            this.mailLogin = config.MailLogin;
+            this.mailPassword = config.MailPassword;
+            this.smtpClientHost = config.SmtpClientHost;
+            this.smtpClientPort = config.SmtpClientPort;
+            this.popHost = config.PopHost;
+            this.popPort = config.PopPort;
         }
         public async void MailSendAsync(MailSendInfoBindingModel info)
         {
-            if (string.IsNullOrEmpty(_mailLogin) || string.IsNullOrEmpty(_mailPassword))
+            if (string.IsNullOrEmpty(mailLogin) || string.IsNullOrEmpty(mailPassword))
             {
                 return;
             }
-            if (string.IsNullOrEmpty(_smtpClientHost) || _smtpClientPort == 0)
+            if (string.IsNullOrEmpty(smtpClientHost) || smtpClientPort == 0)
             {
                 return;
             }
@@ -47,25 +46,24 @@ namespace AircraftPlantBusinessLogic.MailWorker
             }
             await SendMailAsync(info);
         }
-
         public async void MailCheck()
         {
-            if (string.IsNullOrEmpty(_mailLogin) || string.IsNullOrEmpty(_mailPassword))
+            if (string.IsNullOrEmpty(mailLogin) || string.IsNullOrEmpty(mailPassword))
             {
                 return;
             }
-            if (string.IsNullOrEmpty(_popHost) || _popPort == 0)
+            if (string.IsNullOrEmpty(popHost) || popPort == 0)
             {
                 return;
             }
-            if (_messageInfoLogic == null)
+            if (messageInfoLogic == null)
             {
                 return;
             }
             var list = await ReceiveMailAsync();
             foreach (var mail in list)
             {
-                _messageInfoLogic.CreateOrUpdate(mail);
+                messageInfoLogic.CreateOrUpdate(mail);
             }
         }
         protected abstract Task SendMailAsync(MailSendInfoBindingModel info);

@@ -141,7 +141,7 @@ namespace AircraftPlantClientApp.Controllers
             return count * _plane.Price;
         }
 
-        public IActionResult MessagesInfo()
+        public IActionResult Messages()
         {
             if (Program.Client == null)
             {

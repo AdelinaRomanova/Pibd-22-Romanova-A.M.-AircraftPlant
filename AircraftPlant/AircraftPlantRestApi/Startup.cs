@@ -72,12 +72,12 @@ namespace AircraftPlantRestApi
 			var mailSender = app.ApplicationServices.GetService<AbstractMailWorker>();
 			mailSender.MailConfig(new MailConfigBindingModel
 			{
-				MailLogin = Configuration?["MailLogin"]?.ToString(),
-				MailPassword = Configuration?["MailPassword"]?.ToString(),
-				SmtpClientHost = Configuration?["SmtpClientHost"]?.ToString(),
-				SmtpClientPort = Convert.ToInt32(Configuration?["SmtpClientPort"]?.ToString()),
-				PopHost = Configuration?["PopHost"]?.ToString(),
-				PopPort = Convert.ToInt32(Configuration?["PopPort"]?.ToString())
+				MailLogin = Configuration?.GetSection("MailLogin")?.Value.ToString(),
+				MailPassword = Configuration?.GetSection("MailPassword")?.Value.ToString(),
+				SmtpClientHost = Configuration?.GetSection("SmtpClientHost")?.Value.ToString(),
+				SmtpClientPort = Convert.ToInt32(Configuration?.GetSection("SmtpClientPort")?.Value.ToString()),
+				PopHost = Configuration?.GetSection("PopHost")?.Value.ToString(),
+				PopPort = Convert.ToInt32(Configuration?.GetSection("PopPort")?.Value.ToString())
 			});
 		}
 	}
