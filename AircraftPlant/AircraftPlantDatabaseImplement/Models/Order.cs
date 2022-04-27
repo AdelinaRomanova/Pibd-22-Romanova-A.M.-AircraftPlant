@@ -9,6 +9,7 @@ namespace AircraftPlantDatabaseImplement.Models
 	{
 		public int Id { get; set; }
 		public int ClientId { get; set; }
+		public int? ImplementerId { get; set; }
 
 		public int PlaneId { get; set; }
 
@@ -27,6 +28,7 @@ namespace AircraftPlantDatabaseImplement.Models
 
 		public virtual Plane Planes { get; set; }
 		public virtual Client Client { get; set; }
+		public virtual Implementer Implementer { get; set; }
 
 	}
 }
