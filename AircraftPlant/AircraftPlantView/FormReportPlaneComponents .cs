@@ -19,7 +19,7 @@ namespace AircraftPlantView
 		{
 			try
 			{
-				var dict = _logic.GetProductComponent();
+				var dict = _logic.GetPlaneComponent();
 				if (dict != null)
 				{
 					dataGridView.Rows.Clear();
@@ -50,7 +50,7 @@ namespace AircraftPlantView
 			{
 				try
 				{
-					_logic.SaveProductComponentToExcelFile(new ReportBindingModel
+					_logic.SavePlaneComponentToExcelFile(new ReportBindingModel
 					{
 						FileName = dialog.FileName
 					});
