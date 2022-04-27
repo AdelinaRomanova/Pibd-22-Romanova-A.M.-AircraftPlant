@@ -1,4 +1,6 @@
 using AircraftPlantBusinessLogic.BusinessLogics;
+using AircraftPlantBusinessLogic.MailWorker;
+using AircraftPlantContracts.BindingModels;
 using AircraftPlantContracts.BusinessLogicsContracts;
 using AircraftPlantContracts.StoragesContracts;
 using AircraftPlantDatabaseImplement.Implements;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace AircraftPlantRestApi
 {
@@ -27,9 +30,15 @@ namespace AircraftPlantRestApi
 			services.AddTransient<IClientStorage, ClientStorage>();
 			services.AddTransient<IOrderStorage, OrderStorage>();
 			services.AddTransient<IPlaneStorage, PlaneStorage>();
+			services.AddTransient<IMessageInfoStorage, MessageInfoStorage>();
+
 			services.AddTransient<IOrderLogic, OrderLogic>();
 			services.AddTransient<IClientLogic, ClientLogic>();
 			services.AddTransient<IPlaneLogic, PlaneLogic>();
+			services.AddTransient<IMessageInfoLogic, MessageInfoLogic>();
+
+			services.AddSingleton<AbstractMailWorker, MailKitWorker>();
+
 			services.AddControllers();
 			services.AddSwaggerGen(c =>
 			{
@@ -58,6 +67,17 @@ namespace AircraftPlantRestApi
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+			});
+
+			var mailSender = app.ApplicationServices.GetService<AbstractMailWorker>();
+			mailSender.MailConfig(new MailConfigBindingModel
+			{
+				MailLogin = Configuration?["MailLogin"]?.ToString(),
+				MailPassword = Configuration?["MailPassword"]?.ToString(),
+				SmtpClientHost = Configuration?["SmtpClientHost"]?.ToString(),
+				SmtpClientPort = Convert.ToInt32(Configuration?["SmtpClientPort"]?.ToString()),
+				PopHost = Configuration?["PopHost"]?.ToString(),
+				PopPort = Convert.ToInt32(Configuration?["PopPort"]?.ToString())
 			});
 		}
 	}
