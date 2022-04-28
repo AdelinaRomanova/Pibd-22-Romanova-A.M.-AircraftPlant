@@ -245,6 +245,11 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.Navigation("Warehouse");
                 });
 
+            modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Client", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Component", b =>
                 {
                     b.Navigation("PlaneComponents");

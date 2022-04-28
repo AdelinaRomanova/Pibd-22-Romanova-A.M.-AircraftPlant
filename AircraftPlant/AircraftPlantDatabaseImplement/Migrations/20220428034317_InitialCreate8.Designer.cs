@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AircraftPlantDatabaseImplement.Migrations
 {
     [DbContext(typeof(AircraftPlantDatabase))]
-    [Migration("20220409155708_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220428034317_InitialCreate8")]
+    partial class InitialCreate8
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -142,6 +142,54 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.ToTable("PlaneComponents");
                 });
 
+            modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Warehouse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Responsible")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WarehouseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Warehouses");
+                });
+
+            modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.WarehouseComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("ComponentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComponentId");
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("WarehouseComponents");
+                });
+
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Order", b =>
                 {
                     b.HasOne("AircraftPlantDatabaseImplement.Models.Client", "Client")
@@ -180,6 +228,25 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.Navigation("Plane");
                 });
 
+            modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.WarehouseComponent", b =>
+                {
+                    b.HasOne("AircraftPlantDatabaseImplement.Models.Component", "Component")
+                        .WithMany("WarehouseComponents")
+                        .HasForeignKey("ComponentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AircraftPlantDatabaseImplement.Models.Warehouse", "Warehouse")
+                        .WithMany("WarehouseComponents")
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Component");
+
+                    b.Navigation("Warehouse");
+                });
+
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Client", b =>
                 {
                     b.Navigation("Orders");
@@ -188,6 +255,8 @@ namespace AircraftPlantDatabaseImplement.Migrations
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Component", b =>
                 {
                     b.Navigation("PlaneComponents");
+
+                    b.Navigation("WarehouseComponents");
                 });
 
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Plane", b =>
@@ -195,6 +264,11 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("PlaneComponents");
+                });
+
+            modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Warehouse", b =>
+                {
+                    b.Navigation("WarehouseComponents");
                 });
 #pragma warning restore 612, 618
         }

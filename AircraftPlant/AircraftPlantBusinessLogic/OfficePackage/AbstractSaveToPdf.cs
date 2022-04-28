@@ -20,10 +20,10 @@ namespace AircraftPlantBusinessLogic.OfficePackage
                 Text = $"с { info.DateFrom.ToShortDateString() } по { info.DateTo.ToShortDateString() }",
                 Style = "Normal"
             });
-            CreateTable(new List<string> { "3cm", "6cm", "3cm", "2cm", "3cm" });
+            CreateTable(new List<string> { "3cm", "3cm", "3cm", "3cm", "3cm", "3cm" });
             CreateRow(new PdfRowParameters
             {
-                Texts = new List<string> { "Дата заказа", "Изделие", "Количество", "Сумма", "Статус" },
+                Texts = new List<string> { "Дата заказа","ФИО клиента", "Изделие", "Количество", "Сумма", "Статус" },
                 Style = "NormalTitle",
                 ParagraphAlignment = PdfParagraphAlignmentType.Center
             });
@@ -31,7 +31,7 @@ namespace AircraftPlantBusinessLogic.OfficePackage
             {
                 CreateRow(new PdfRowParameters
                 {
-                    Texts = new List<string> { order.DateCreate.ToShortDateString(), order.PlaneName, order.Count.ToString(), order.Sum.ToString(), order.Status.ToString()},
+                    Texts = new List<string> { order.DateCreate.ToShortDateString(), order.ClientFIO, order.PlaneName, order.Count.ToString(), order.Sum.ToString(), order.Status.ToString()},
                     Style = "Normal",
                     ParagraphAlignment = PdfParagraphAlignmentType.Left
                 });
