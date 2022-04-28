@@ -251,8 +251,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!DateCreate.Value</Value>
-                                  <Style />
+									<Value>=Fields!DateCreate.Value</Value>
+									<Style>
+										<Format>d</Format>
+									</Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />

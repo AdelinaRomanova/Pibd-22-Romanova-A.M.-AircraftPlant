@@ -32,22 +32,6 @@ namespace AircraftPlantView
             Controls.Add(panel);
         }
 
-        private void buttonMake_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var dataSource = logic.GetOrdersByDate();
-                var source = new ReportDataSource("DataSetOrdersByDate", dataSource);
-                reportViewer.LocalReport.DataSources.Clear();
-                reportViewer.LocalReport.DataSources.Add(source);
-                reportViewer.RefreshReport();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void buttonToPdf_Click(object sender, EventArgs e)
         {
             using var dialog = new SaveFileDialog { Filter = "pdf|*.pdf" };
@@ -65,6 +49,22 @@ namespace AircraftPlantView
                 {
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void buttonMake_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dataSource = logic.GetOrdersByDate();
+                var source = new ReportDataSource("DataSetOrdersInfo", dataSource);
+                reportViewer.LocalReport.DataSources.Clear();
+                reportViewer.LocalReport.DataSources.Add(source);
+                reportViewer.RefreshReport();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
