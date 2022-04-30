@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AircraftPlantDatabaseImplement.Migrations
 {
     [DbContext(typeof(AircraftPlantDatabase))]
-    [Migration("20220414065947_InitialCreate1")]
-    partial class InitialCreate1
+    [Migration("20220427154849_InitialCreate7")]
+    partial class InitialCreate7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,6 +81,33 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Implementers");
+                });
+
+            modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.Property<string>("MessageId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateDelivery")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SenderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MessageId");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("MessagesInfo");
                 });
 
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Order", b =>
@@ -169,6 +196,15 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.ToTable("PlaneComponents");
                 });
 
+            modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.HasOne("AircraftPlantDatabaseImplement.Models.Client", "Client")
+                        .WithMany("MessagesInfo")
+                        .HasForeignKey("ClientId");
+
+                    b.Navigation("Client");
+                });
+
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Order", b =>
                 {
                     b.HasOne("AircraftPlantDatabaseImplement.Models.Client", "Client")
@@ -215,6 +251,8 @@ namespace AircraftPlantDatabaseImplement.Migrations
 
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Client", b =>
                 {
+                    b.Navigation("MessagesInfo");
+
                     b.Navigation("Orders");
                 });
 
