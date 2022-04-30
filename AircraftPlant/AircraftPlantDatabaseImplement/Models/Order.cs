@@ -8,6 +8,7 @@ namespace AircraftPlantDatabaseImplement.Models
 	public class Order
 	{
 		public int Id { get; set; }
+		public int ClientId { get; set; }
 		public int PlaneId { get; set; }
 		[Required]
 		public int Count { get; set; }
@@ -21,6 +22,7 @@ namespace AircraftPlantDatabaseImplement.Models
 		public DateTime? DateImplement { get; set; }
 
 		public virtual Plane Planes { get; set; }
+		public virtual Client Client { get; set; }
 
 	}
 }

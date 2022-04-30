@@ -88,6 +88,7 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 			.Select(x => new ReportOrdersViewModel
 			{
 				DateCreate = x.DateCreate,
+				ClientFIO = x.ClientFIO,
 				PlaneName = x.PlaneName,
 				Count = x.Count,
 				Sum = x.Sum,

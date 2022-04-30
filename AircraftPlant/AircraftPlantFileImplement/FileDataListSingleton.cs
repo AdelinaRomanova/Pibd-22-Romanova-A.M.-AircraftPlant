@@ -14,17 +14,20 @@ namespace AircraftPlantFileImplement
 		private readonly string ComponentFileName = "Component.xml";
 		private readonly string OrderFileName = "Order.xml";
 		private readonly string PlaneFileName = "Plane.xml";
+		private readonly string ClientFileName = "Client.xml";
 		private readonly string WarehouseFileName = "Warehouse.xml";
 		public List<Component> Components { get; set; }
 		public List<Order> Orders { get; set; }
 		public List<Plane> Planes { get; set; }
 		public List<Warehouse> Warehouses { get; set; }
+		public List<Client> Clients { get; set; }
 		private FileDataListSingleton()
 		{
 			Components = LoadComponents();
 			Orders = LoadOrders();
 			Planes = LoadPlanes();
 			Warehouses = LoadWarehouses();
+			Clients = LoadClients();
 		}
 		public static FileDataListSingleton GetInstance()
 		{
@@ -39,6 +42,7 @@ namespace AircraftPlantFileImplement
 			SaveComponents();
 			SaveOrders();
 			SavePlanes();
+			SaveClients();
 			SaveWarehouses();
 		}
 		private List<Component> LoadComponents()
@@ -71,6 +75,7 @@ namespace AircraftPlantFileImplement
 					list.Add(new Order
 					{
 						Id = Convert.ToInt32(elem.Attribute("Id").Value),
+						ClientId = Convert.ToInt32(elem.Element("ClientId").Value),
 						PlaneId = Convert.ToInt32(elem.Element("PlaneId").Value),
 						Count = Convert.ToInt32(elem.Element("Count").Value),
 						Sum = Convert.ToInt32(elem.Element("Sum").Value),
@@ -136,6 +141,28 @@ namespace AircraftPlantFileImplement
 			}
 			return list;
 		}
+		private List<Client> LoadClients()
+		{
+			var list = new List<Client>();
+
+			if (File.Exists(ClientFileName))
+			{
+				XDocument xDocument = XDocument.Load(ClientFileName);
+				var xElements = xDocument.Root.Elements("Client").ToList();
+
+				foreach (var elem in xElements)
+				{
+					list.Add(new Client
+					{
+						Id = Convert.ToInt32(elem.Attribute("Id").Value),
+						ClientFIO = elem.Element("ClientFIO").Value,
+						Email = elem.Element("Email").Value,
+						Password = elem.Element("Password").Value,
+					});
+				}
+			}
+			return list;
+		}
 		private void SaveComponents()
 		{
 			if (Components != null)
@@ -158,6 +185,7 @@ namespace AircraftPlantFileImplement
 				{
 					xElement.Add(new XElement("Order",
 					new XAttribute("Id", order.Id),
+					new XElement("ClientId", order.ClientId),
 					new XElement("PlaneId", order.PlaneId),
 					new XElement("Count", order.Count),
 					new XElement("Sum", order.Sum),
@@ -193,6 +221,25 @@ namespace AircraftPlantFileImplement
 				xDocument.Save(PlaneFileName);
 			}
 		}
+		private void SaveClients()
+		{
+			if (Clients != null)
+			{
+				var xElement = new XElement("Clients");
+
+				foreach (var client in Clients)
+				{
+					xElement.Add(new XElement("Client",
+					new XAttribute("Id", client.Id),
+					new XElement("ClientFIO", client.ClientFIO),
+					new XElement("Email", client.Email),
+					new XElement("Password", client.Password)));
+				}
+
+				XDocument xDocument = new XDocument(xElement);
+				xDocument.Save(ClientFileName);
+			}
+		}
 		private void SaveWarehouses()
 		{
 			if (Warehouses != null)
@@ -224,6 +271,7 @@ namespace AircraftPlantFileImplement
 			instance.SavePlanes();
 			instance.SaveComponents();
 			instance.SaveWarehouses();
+			instance.SaveClients();
 		}
 	}
 }
