@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using AircraftPlantContracts.Enums;
-using System.Text;
 
 namespace AircraftPlantContracts.BindingModels
 {
@@ -14,5 +12,8 @@ namespace AircraftPlantContracts.BindingModels
 		public OrderStatus Status { get; set; }
 		public DateTime DateCreate { get; set; }
 		public DateTime? DateImplement { get; set; }
+		public DateTime? DateFrom { get; set; }
+		public DateTime? DateTo { get; set; }
+
 	}
 }

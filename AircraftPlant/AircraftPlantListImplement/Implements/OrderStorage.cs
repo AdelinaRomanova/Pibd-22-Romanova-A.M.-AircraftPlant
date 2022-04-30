@@ -41,12 +41,15 @@ namespace AircraftPlantListImplement.Implements
         }
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
         {
-            if (model == null) return null;
+            if (model == null)
+            {
+                return null;
+            }
 
-            List<OrderViewModel> result = new List<OrderViewModel>();
+            var result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.Id.Equals(model.Id))
+                if (order.PlaneId == model.PlaneId || (order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo))
                 {
                     result.Add(CreateModel(order));
                 }
