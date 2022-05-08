@@ -10,7 +10,6 @@ namespace AircraftPlantDatabaseImplement.Models
 		public int Id { get; set; }
 		public int ClientId { get; set; }
 		public int? ImplementerId { get; set; }
-
 		public int PlaneId { get; set; }
 		[Required]
 		public int Count { get; set; }

@@ -3,11 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AircraftPlantDatabaseImplement.Migrations
 {
-<<<<<<<< HEAD:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220428034317_InitialCreate8.cs
-    public partial class InitialCreate8 : Migration
-========
-    public partial class InitialCreate1 : Migration
->>>>>>>> laba_6:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220414065947_InitialCreate1.cs
+    public partial class InitialCreate9 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -226,11 +222,10 @@ namespace AircraftPlantDatabaseImplement.Migrations
                 name: "Clients");
 
             migrationBuilder.DropTable(
-<<<<<<<< HEAD:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220428034317_InitialCreate8.cs
-                name: "Planes");
-========
                 name: "Implementers");
->>>>>>>> laba_6:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220414065947_InitialCreate1.cs
+
+            migrationBuilder.DropTable(
+                name: "Planes");
 
             migrationBuilder.DropTable(
                 name: "Components");

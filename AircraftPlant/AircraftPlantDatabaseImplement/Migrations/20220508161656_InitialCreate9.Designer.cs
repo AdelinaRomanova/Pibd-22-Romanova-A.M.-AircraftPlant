@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AircraftPlantDatabaseImplement.Migrations
 {
     [DbContext(typeof(AircraftPlantDatabase))]
-<<<<<<<< HEAD:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220428034317_InitialCreate8.Designer.cs
-    [Migration("20220428034317_InitialCreate8")]
-    partial class InitialCreate8
-========
-    [Migration("20220414065947_InitialCreate1")]
-    partial class InitialCreate1
->>>>>>>> laba_6:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220414065947_InitialCreate1.Designer.cs
+    [Migration("20220508161656_InitialCreate9")]
+    partial class InitialCreate9
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

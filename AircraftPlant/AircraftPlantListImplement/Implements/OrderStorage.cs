@@ -35,7 +35,9 @@ namespace AircraftPlantListImplement.Implements
             {
                 if ((!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date)
                     || (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <= model.DateTo.Value.Date)
-                    || (model.ClientId.HasValue && order.ClientId == model.ClientId))
+                    || (model.ClientId.HasValue && order.ClientId == model.ClientId)
+                    || (model.SearchStatus.HasValue && model.SearchStatus.Value == order.Status)
+                    || (model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && model.Status == order.Status))
                 {
                     result.Add(CreateModel(order));
                 }

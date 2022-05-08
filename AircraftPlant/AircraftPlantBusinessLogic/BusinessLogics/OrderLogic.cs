@@ -11,13 +11,11 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 	public class OrderLogic : IOrderLogic
 	{
 		private readonly IOrderStorage _orderStorage;
-		private readonly IClientStorage _clientStorage;
 		private readonly IWarehouseStorage _warehouseStorage;
 		private readonly IPlaneStorage _planeStorage;
-		public OrderLogic(IOrderStorage orderStorage, IClientStorage clientStorage, IWarehouseStorage warehouseStorage, IPlaneStorage planeStorage)
+		public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage, IPlaneStorage planeStorage)
 		{
 			_orderStorage = orderStorage;
-			_clientStorage = clientStorage;
 			_warehouseStorage = warehouseStorage;
 			_planeStorage = planeStorage;
 		}
@@ -47,39 +45,35 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 		}
 		public void TakeOrderInWork(ChangeStatusBindingModel model)
 		{
+			OrderStatus status = OrderStatus.Выполняется;
+
 			var order = _orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
 
 			if (order == null)
 			{
 				throw new Exception("Заказ не найден");
 			}
-			if (order.Status != OrderStatus.Принят.ToString())
+			if (order.Status != OrderStatus.Принят.ToString() && order.Status != OrderStatus.ТребуютсяМатериалы.ToString())
 			{
-				throw new Exception("Заказ не в статусе \"Принят\"");
+				throw new Exception("Статус заказа отличен от \"Принят\" или \"Требуются материалы\"");
 			}
 			var plane = _planeStorage.GetElement(new PlaneBindingModel { Id = order.PlaneId });
-			try
+			if (!_warehouseStorage.CheckComponentsCount(order.Count, plane.PlaneComponents))
 			{
-				if (!_warehouseStorage.CheckComponentsCount(order.Count, plane.PlaneComponents))
-				{
-					throw new Exception("Недостаточно компонентов на складе!");
-				}
-			}
-			catch (Exception ex)
-			{
-				throw ex;
+				status = OrderStatus.ТребуютсяМатериалы;
+				model.ImplementerId = null;
 			}
 			_orderStorage.Update(new OrderBindingModel
 			{
 				Id = order.Id,
+				ClientId = order.ClientId,
 				PlaneId = order.PlaneId,
-				Count = order.Count,
+				ImplementerId = model.ImplementerId,
 				Sum = order.Sum,
+				Count = order.Count,
 				DateCreate = order.DateCreate,
 				DateImplement = DateTime.Now,
-				Status = OrderStatus.Выполняется,
-				ClientId = order.ClientId,
-				ImplementerId = model.ImplementerId
+				Status = status
 			});
 		}
 		public void FinishOrder(ChangeStatusBindingModel model)
