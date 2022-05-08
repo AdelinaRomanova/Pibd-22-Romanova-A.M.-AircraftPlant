@@ -3,7 +3,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AircraftPlantDatabaseImplement.Migrations
 {
+<<<<<<<< HEAD:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220428034317_InitialCreate8.cs
     public partial class InitialCreate8 : Migration
+========
+    public partial class InitialCreate1 : Migration
+>>>>>>>> laba_6:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220414065947_InitialCreate1.cs
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,6 +37,21 @@ namespace AircraftPlantDatabaseImplement.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Components", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Implementers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImplementerFIO = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WorkingTime = table.Column<int>(type: "int", nullable: false),
+                    PauseTime = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Implementers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,6 +90,7 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClientId = table.Column<int>(type: "int", nullable: false),
+                    ImplementerId = table.Column<int>(type: "int", nullable: true),
                     PlaneId = table.Column<int>(type: "int", nullable: false),
                     Count = table.Column<int>(type: "int", nullable: false),
                     Sum = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -87,6 +107,12 @@ namespace AircraftPlantDatabaseImplement.Migrations
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Implementers_ImplementerId",
+                        column: x => x.ImplementerId,
+                        principalTable: "Implementers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_Planes_PlaneId",
                         column: x => x.PlaneId,
@@ -155,6 +181,11 @@ namespace AircraftPlantDatabaseImplement.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_ImplementerId",
+                table: "Orders",
+                column: "ImplementerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_PlaneId",
                 table: "Orders",
                 column: "PlaneId");
@@ -195,7 +226,11 @@ namespace AircraftPlantDatabaseImplement.Migrations
                 name: "Clients");
 
             migrationBuilder.DropTable(
+<<<<<<<< HEAD:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220428034317_InitialCreate8.cs
                 name: "Planes");
+========
+                name: "Implementers");
+>>>>>>>> laba_6:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220414065947_InitialCreate1.cs
 
             migrationBuilder.DropTable(
                 name: "Components");

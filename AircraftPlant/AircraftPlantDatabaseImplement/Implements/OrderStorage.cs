@@ -16,20 +16,12 @@ namespace AircraftPlantDatabaseImplement.Implements
             using var context = new AircraftPlantDatabase();
             return context.Orders
                 .Include(rec => rec.Planes)
-                .Select(rec => new OrderViewModel
-                {
-                    Id = rec.Id,
-                    PlaneId = rec.PlaneId,
-                    PlaneName = rec.Planes.PlaneName,
-                    Count = rec.Count,
-                    Sum = rec.Sum,
-                    Status = rec.Status.ToString(),
-                    DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement,
-                    ClientId = rec.ClientId,
-                    ClientFIO = rec.Client.ClientFIO
-                })
-                .ToList();
+                
+            .Include(rec => rec.Client)
+            .Include(rec => rec.Implementer)
+            .ToList()
+            .Select(CreateModel)
+            .ToList();
         }
 
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
@@ -42,6 +34,12 @@ namespace AircraftPlantDatabaseImplement.Implements
             return context.Orders
                 .Include(rec => rec.Planes)
                 .Include(rec => rec.Client)
+                .Include(rec => rec.Implementer)
+                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+                (model.SearchStatus.HasValue && model.SearchStatus.Value == rec.Status) ||
+                (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && model.Status == rec.Status))
                 .Where(rec => rec.PlaneId == model.PlaneId 
                 || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo) 
                 || model.ClientId.HasValue && rec.ClientId == model.ClientId)
@@ -58,6 +56,10 @@ namespace AircraftPlantDatabaseImplement.Implements
             }
             using var context = new AircraftPlantDatabase();
             var order = context.Orders
+                .Include(rec => rec.Planes)
+                .Include(rec => rec.Client)
+                .Include(rec => rec.Implementer)
+                .FirstOrDefault(rec => rec.Id == model.Id);
             .Include(rec => rec.Planes)
             .FirstOrDefault(rec => rec.Id == model.Id || rec.Id == model.Id);
             return order != null ? CreateModel(order) : null;
@@ -89,7 +91,7 @@ namespace AircraftPlantDatabaseImplement.Implements
                 var element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element == null)
                 {
-                    throw new Exception("Элемент не найден");
+                    throw new Exception("Заказ не найден");
                 }
                 CreateModel(model, element);
                 context.SaveChanges();
@@ -119,6 +121,7 @@ namespace AircraftPlantDatabaseImplement.Implements
         public static Order CreateModel(OrderBindingModel model, Order order)
         {
             order.PlaneId = model.PlaneId;
+            order.ImplementerId = model.ImplementerId;
             order.ClientId = (int)model.ClientId;
             order.Count = model.Count;
             order.Sum = model.Sum;
@@ -132,6 +135,8 @@ namespace AircraftPlantDatabaseImplement.Implements
             return new OrderViewModel
             {
                 Id = order.Id,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = order.ImplementerId.HasValue ? order.Implementer.ImplementerFIO : string.Empty,
                 ClientId = order.ClientId,
                 ClientFIO = order.Client.ClientFIO,
                 PlaneId = order.PlaneId,
