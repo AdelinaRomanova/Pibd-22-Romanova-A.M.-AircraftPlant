@@ -14,25 +14,20 @@ namespace AircraftPlantView
 		private readonly IReportLogic _reportLogic;
 		private readonly IImplementerLogic _implementerLogic;
 		private readonly IWorkProcess _workProcces;
-		public FormMain(OrderLogic orderLogic, IReportLogic reportLogic, IWorkProcess workProcess, IImplementerLogic implementerLogic)
+		private readonly IBackUpLogic _backUpLogic;
+
+		public FormMain(OrderLogic orderLogic, IReportLogic reportLogic, IWorkProcess workProcess, IImplementerLogic implementerLogic, IBackUpLogic backUpLogic)
 		{
 			InitializeComponent();
 			_orderLogic = orderLogic;
 			_reportLogic = reportLogic;
 			_implementerLogic = implementerLogic;
 			_workProcces = workProcess;
+			_backUpLogic = backUpLogic;
 		}
 		private void LoadData()
 		{
-				var list = _orderLogic.Read(null);
-				if (list != null)
-				{
-					dataGridView.DataSource = list;
-					dataGridView.Columns[0].Visible = false;
-					dataGridView.Columns[1].Visible = false;
-					dataGridView.Columns[2].Visible = false;
-					dataGridView.Columns[3].Visible = false;
-				}
+			Program.ConfigGrid(_orderLogic.Read(null), dataGridView);
 		}
 		private void компонентыToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -142,5 +137,26 @@ namespace AircraftPlantView
 			var form = Program.Container.Resolve<FormMessagesInfo>();
 			form.ShowDialog();
 		}
-    }
+
+        private void создатьБекапToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			try
+			{
+				if (_backUpLogic != null)
+				{
+					var fbd = new FolderBrowserDialog();
+					if (fbd.ShowDialog() == DialogResult.OK)
+					{
+						_backUpLogic.CreateBackUp(new BackUpSaveBinidngModel { FolderName = fbd.SelectedPath });
+						MessageBox.Show("Бекап создан", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}
+			    }
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+
+		}
+	}
 }
