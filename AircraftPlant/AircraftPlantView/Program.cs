@@ -98,8 +98,7 @@ namespace AircraftPlantView
 			foreach (var prop in type.GetProperties())
 			{
 				// получаем список атрибутов
-				var attributes =
-				prop.GetCustomAttributes(typeof(ColumnAttribute), true);
+				var attributes = prop.GetCustomAttributes(typeof(ColumnAttribute), true);
 				if (attributes != null && attributes.Length > 0)
 				{
 					foreach (var attr in attributes)
