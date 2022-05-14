@@ -28,6 +28,7 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
                 return new List<ClientViewModel> { clientStorage.GetElement(model) };
             }
             return clientStorage.GetFilteredList(model);
+
         }
         public void CreateOrUpdate(ClientBindingModel model)
         {
