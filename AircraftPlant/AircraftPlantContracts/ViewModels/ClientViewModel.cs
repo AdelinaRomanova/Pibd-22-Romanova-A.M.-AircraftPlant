@@ -1,21 +1,22 @@
-﻿using System.ComponentModel;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
+using AircraftPlantContracts.Attributes;
 
 namespace AircraftPlantContracts.ViewModels
 {
     [DataContract]
     public class ClientViewModel
 	{
+        [Column(title: "Номер", width: 100)]
         [DataMember]
         public int Id { get; set; }
         [DataMember]
-        [DisplayName("ФИО клиента")]
+        [Column(title: "Клиент", width: 150)]
         public string ClientFIO { get; set; }
         [DataMember]
-        [DisplayName("Логин")]
+        [Column(title: "Email", width: 150)]
         public string Email { get; set; }
         [DataMember]
-        [DisplayName("Пароль")]
+        [Column(title: "Пароль", width: 100)]
         public string Password { get; set; }
     }
 }

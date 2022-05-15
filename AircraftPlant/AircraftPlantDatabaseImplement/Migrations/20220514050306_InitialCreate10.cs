@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AircraftPlantDatabaseImplement.Migrations
 {
-    public partial class InitialCreate7 : Migration
+    public partial class InitialCreate10 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
