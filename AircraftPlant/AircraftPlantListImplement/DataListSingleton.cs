@@ -11,6 +11,7 @@ namespace AircraftPlantListImplement
 		public List<Order> Orders { get; set; }
 		public List<Plane> Planes { get; set; }
 		public List<Client> Clients { get; set; }
+		public List<Implementer> Implementers { get; set; }
 		public List<Warehouse> Warehouses { get; set; }
 		private DataListSingleton()
 		{
@@ -19,6 +20,7 @@ namespace AircraftPlantListImplement
 			Planes = new List<Plane>();
 			Clients = new List<Client>();
 			Warehouses = new List<Warehouse>();
+			Implementers = new List<Implementer>();
 		}
 		public static DataListSingleton GetInstance()
 		{

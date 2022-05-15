@@ -28,9 +28,11 @@ namespace AircraftPlantFileImplement.Implements
                 return null;
             }
             return source.Orders
-              .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
-              (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
-              (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+              .Where(rec => rec.PlaneId == model.PlaneId 
+              ||(model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) 
+              ||(model.ClientId.HasValue && rec.ClientId == model.ClientId)
+              || (model.SearchStatus.HasValue && model.SearchStatus.Value == rec.Status)
+              || (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && model.Status == rec.Status))
               .Select(CreateModel)
               .ToList();
 
@@ -82,6 +84,7 @@ namespace AircraftPlantFileImplement.Implements
         private Order CreateModel(OrderBindingModel model, Order order)
         {
             order.PlaneId = model.PlaneId;
+            order.ImplementerId = (int)model.ImplementerId;
             order.ClientId = (int)model.ClientId;
             order.Count = model.Count;
             order.Sum = model.Sum;
@@ -96,6 +99,8 @@ namespace AircraftPlantFileImplement.Implements
             return new OrderViewModel
             {
                 Id = order.Id,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = source.Implementers.FirstOrDefault(rec => rec.Id == order.ImplementerId)?.ImplementerFIO,
                 ClientId = order.ClientId,
                 ClientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId)?.ClientFIO,
                 PlaneId = order.PlaneId,

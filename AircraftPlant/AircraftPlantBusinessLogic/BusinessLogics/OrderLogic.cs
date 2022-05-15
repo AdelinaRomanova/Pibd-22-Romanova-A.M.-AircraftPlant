@@ -13,6 +13,7 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 		private readonly IOrderStorage _orderStorage;
 		private readonly IWarehouseStorage _warehouseStorage;
 		private readonly IPlaneStorage _planeStorage;
+		private readonly object locker = new object();
 		public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage, IPlaneStorage planeStorage)
 		{
 			_orderStorage = orderStorage;
@@ -45,39 +46,39 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 		}
 		public void TakeOrderInWork(ChangeStatusBindingModel model)
 		{
-			var order = _orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
+			lock (locker)
+			{
+				OrderStatus status = OrderStatus.Выполняется;
 
-			if (order == null)
-			{
-				throw new Exception("Заказ не найден");
-			}
-			if (order.Status != OrderStatus.Принят.ToString())
-			{
-				throw new Exception("Заказ не в статусе \"Принят\"");
-			}
-			var plane = _planeStorage.GetElement(new PlaneBindingModel { Id = order.PlaneId });
-			try
-			{
+				var order = _orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
+
+				if (order == null)
+				{
+					throw new Exception("Заказ не найден");
+				}
+				if (order.Status != OrderStatus.Принят.ToString() && order.Status != OrderStatus.ТребуютсяМатериалы.ToString())
+				{
+					throw new Exception("Статус заказа отличен от \"Принят\" или \"Требуются материалы\"");
+				}
+				var plane = _planeStorage.GetElement(new PlaneBindingModel { Id = order.PlaneId });
 				if (!_warehouseStorage.CheckComponentsCount(order.Count, plane.PlaneComponents))
 				{
-					throw new Exception("Недостаточно компонентов на складе!");
+					status = OrderStatus.ТребуютсяМатериалы;
+					model.ImplementerId = null;
 				}
+				_orderStorage.Update(new OrderBindingModel
+				{
+					Id = order.Id,
+					ClientId = order.ClientId,
+					PlaneId = order.PlaneId,
+					ImplementerId = model.ImplementerId,
+					Sum = order.Sum,
+					Count = order.Count,
+					DateCreate = order.DateCreate,
+					DateImplement = DateTime.Now,
+					Status = status
+				});
 			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-			_orderStorage.Update(new OrderBindingModel
-			{
-				Id = order.Id,
-				PlaneId = order.PlaneId,
-				Count = order.Count,
-				Sum = order.Sum,
-				DateCreate = order.DateCreate,
-				DateImplement = DateTime.Now,
-				Status = OrderStatus.Выполняется,
-				ClientId = order.ClientId
-			});
 		}
 		public void FinishOrder(ChangeStatusBindingModel model)
 		{
@@ -85,6 +86,10 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 			if (order == null)
 			{
 				throw new Exception("Заказ не найден");
+			}
+			if (order.Status.Equals("Требуются_материалы"))
+			{
+				return;
 			}
 			if (order.Status != OrderStatus.Выполняется.ToString())
 			{
@@ -99,7 +104,8 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 				DateCreate = order.DateCreate,
 				DateImplement = order.DateImplement,
 				Status = OrderStatus.Готов,
-				ClientId = order.ClientId
+				ClientId = order.ClientId,
+				ImplementerId = order.ImplementerId
 			});
 		}
 		public void DeliveryOrder(ChangeStatusBindingModel model)
@@ -117,6 +123,7 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 			{
 				Id = order.Id,
 				PlaneId = order.PlaneId,
+				ImplementerId = order.ImplementerId,
 				Count = order.Count,
 				Sum = order.Sum,
 				DateCreate = order.DateCreate,
