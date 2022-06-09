@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AircraftPlantDatabaseImplement.Migrations
 {
     [DbContext(typeof(AircraftPlantDatabase))]
-<<<<<<<< HEAD:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220514061930_InitialCreate12.Designer.cs
-    [Migration("20220514061930_InitialCreate12")]
+    [Migration("20220609185747_InitialCreate12")]
     partial class InitialCreate12
-========
-    [Migration("20220427154849_InitialCreate7")]
-    partial class InitialCreate7
->>>>>>>> laba_7:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220427154849_InitialCreate7.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -102,11 +97,20 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.Property<DateTime>("DateDelivery")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Reply")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SenderName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Subject")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Viewed")
+                        .HasColumnType("bit");
 
                     b.HasKey("MessageId");
 
@@ -201,7 +205,6 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.ToTable("PlaneComponents");
                 });
 
-<<<<<<<< HEAD:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220514061930_InitialCreate12.Designer.cs
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Warehouse", b =>
                 {
                     b.Property<int>("Id")
@@ -248,7 +251,8 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.HasIndex("WarehouseId");
 
                     b.ToTable("WarehouseComponents");
-========
+                });
+
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.MessageInfo", b =>
                 {
                     b.HasOne("AircraftPlantDatabaseImplement.Models.Client", "Client")
@@ -256,7 +260,6 @@ namespace AircraftPlantDatabaseImplement.Migrations
                         .HasForeignKey("ClientId");
 
                     b.Navigation("Client");
->>>>>>>> laba_7:AircraftPlant/AircraftPlantDatabaseImplement/Migrations/20220427154849_InitialCreate7.Designer.cs
                 });
 
             modelBuilder.Entity("AircraftPlantDatabaseImplement.Models.Order", b =>

@@ -1,7 +1,7 @@
 ﻿@using AircraftPlantContracts.ViewModels
 @model List<MessageInfoViewModel>
 @{
-    ViewData["Title"] = "Messages";
+    ViewData["Title"] = "MessageInfo";
 }
 <div class="text-center">
     <h1 class="display-4">Письма</h1>
@@ -20,13 +20,16 @@
                         Отправитель
                     </th>
                     <th>
-                        Дата
+                        Дата письма
                     </th>
                     <th>
-                        Тема
+                        Заголовок
                     </th>
                     <th>
                         Текст
+                    </th>
+                     <th>
+                        Ответ
                     </th>
                 </tr>
             </thead>
@@ -46,9 +49,17 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Body)
                     </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reply)
+                    </td>
                 </tr>
                 }
             </tbody>
         </table>
+         <form>
+            <button asp-action="PrevMailsPage" class="btn btn-primary">Назад</button>
+            <input type="text" name="pageNumber" value="@ViewBag.Id" size="5" />
+            <button asp-action="NextMailsPage" class="btn btn-primary">Вперёд</button>
+        </form>
     }
 </div>

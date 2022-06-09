@@ -7,16 +7,21 @@ using AircraftPlantContracts.StoragesContracts;
 using AircraftPlantContracts.ViewModels;
 using System;
 using System.Collections.Generic;
+using AircraftPlantBusinessLogic.MailWorker;
 
 namespace AircraftPlantBusinessLogic.BusinessLogics
 {
 	public class OrderLogic : IOrderLogic
 	{
 		private readonly IOrderStorage _orderStorage;
+		private readonly AbstractMailWorker _abstractMailWorker;
+		private readonly IClientStorage _clientStorage;
+
 		private readonly IWarehouseStorage _warehouseStorage;
 		private readonly IPlaneStorage _planeStorage;
 		private readonly object locker = new object();
-		public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage, IPlaneStorage planeStorage)
+		public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage, IPlaneStorage planeStorage,
+			AbstractMailWorker abstractMailWorker, IClientStorage clientStorage)
 		{
 			_orderStorage = orderStorage;
 			_warehouseStorage = warehouseStorage;
@@ -46,7 +51,7 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 				DateCreate = DateTime.Now,
 				Status = OrderStatus.Принят,
 				ClientId = model.ClientId
-			});
+			}); 
 
 			_abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
 			{
@@ -92,38 +97,17 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 					DateImplement = DateTime.Now,
 					Status = status
 				});
-			}
-		}
-			if (order == null)
-			{
-				throw new Exception("Заказ не найден");
-			}
-			if (order.Status != OrderStatus.Принят.ToString())
-			{
-				throw new Exception("Заказ не в статусе \"Принят\"");
-			}
-			_orderStorage.Update(new OrderBindingModel
-			{
-				Id = order.Id,
-				PlaneId = order.PlaneId,
-				Count = order.Count,
-				Sum = order.Sum,
-				DateCreate = order.DateCreate,
-				DateImplement = DateTime.Now,
-				Status = OrderStatus.Выполняется,
-				ClientId = order.ClientId,
-				ImplementerId = model.ImplementerId
-			});
 
-			_abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
-			{
-				MailAddress = _clientStorage.GetElement(new ClientBindingModel
+				_abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
 				{
-					Id = order.ClientId
-				})?.Email,
-				Subject = $"Заказ №{order.Id}",
-				Text = $"Заказ №{order.Id} передан в работу."
-			});
+					MailAddress = _clientStorage.GetElement(new ClientBindingModel
+					{
+						Id = order.ClientId
+					})?.Email,
+					Subject = $"Заказ №{order.Id}",
+					Text = $"Заказ №{order.Id} передан в работу."
+				});
+			}
 		}
 		public void FinishOrder(ChangeStatusBindingModel model)
 		{

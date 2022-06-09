@@ -9,7 +9,7 @@ namespace AircraftPlantDatabaseImplement.Implements
 		{
 			if (optionsBuilder.IsConfigured == false)
 			{
-				optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-5SU5L3MT\SQLEXPRESS01;Initial Catalog=AircraftPlantDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
+				optionsBuilder.UseSqlServer(@"Data Source=localhost\SQLEXPRESS01;Initial Catalog=AircraftPlantDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
 			}
 			base.OnConfiguring(optionsBuilder);
 		}

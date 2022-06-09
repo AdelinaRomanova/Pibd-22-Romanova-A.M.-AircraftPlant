@@ -7,6 +7,7 @@ namespace AircraftPlantClientApp
 	public class Program
 	{
 		public static ClientViewModel Client { get; set; }
+		public static int PageNumber = 1;
 		public static void Main(string[] args)
 		{
 			CreateHostBuilder(args).Build().Run();

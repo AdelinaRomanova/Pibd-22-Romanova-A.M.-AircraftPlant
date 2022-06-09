@@ -20,14 +20,7 @@ namespace AircraftPlantFileImplement.Implements
 
         public List<MessageInfoViewModel> GetFullList()
         {
-            return source.MessagesInfo.Select(rec => new MessageInfoViewModel
-            {
-                MessageId = rec.MessageId,
-                Body = rec.Body,
-                Subject = rec.Subject,
-                DateDelivery = rec.DateDelivery,
-                SenderName = rec.SenderName
-            }).ToList();
+            return source.MessagesInfo.Select(CreateModel).ToList();
         }
 
         public List<MessageInfoViewModel> GetFilteredList(MessageInfoBindingModel model)
@@ -36,16 +29,16 @@ namespace AircraftPlantFileImplement.Implements
             {
                 return null;
             }
-            return source.MessagesInfo
-                .Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) || (!model.ClientId.HasValue && rec.DateDelivery.Date == model.DateDelivery.Date))
-                .Select(rec => new MessageInfoViewModel
-                {
-                    MessageId = rec.MessageId,
-                    SenderName = rec.SenderName,
-                    DateDelivery = rec.DateDelivery,
-                    Subject = rec.Subject,
-                    Body = rec.Body
-                }).ToList();
+            if (model.ToSkip.HasValue && model.ToTake.HasValue && !model.ClientId.HasValue)
+            {
+                return source.MessagesInfo.Skip((int)model.ToSkip).Take((int)model.ToTake).Select(CreateModel).ToList();
+            }
+            return source.MessagesInfo.Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+            (!model.ClientId.HasValue && rec.DateDelivery.Date == model.DateDelivery.Date))
+                .Skip(model.ToSkip ?? 0)
+                .Take(model.ToTake ?? source.MessagesInfo.Count())
+                .Select(CreateModel)
+                .ToList();
         }
 
         public void Insert(MessageInfoBindingModel model)
@@ -55,16 +48,42 @@ namespace AircraftPlantFileImplement.Implements
             {
                 throw new Exception("Уже есть письмо с таким идентификатором");
             }
-            source.MessagesInfo.Add(new MessageInfo
-            {
-                MessageId = model.MessageId,
-                ClientId = model.ClientId,
-                SenderName = model.FromMailAddress,
-                DateDelivery = model.DateDelivery,
-                Subject = model.Subject,
-                Body = model.Body
-            });
+            source.MessagesInfo.Add(CreateModel(model, element));
         }
 
+        public void Update(MessageInfoBindingModel model)
+        {
+            MessageInfo element = source.MessagesInfo.FirstOrDefault(rec => rec.MessageId == model.MessageId);
+            if (element == null)
+            {
+                throw new Exception("Элемент не найден");
+            }
+            CreateModel(model, element);
+        }
+        private static MessageInfo CreateModel(MessageInfoBindingModel model, MessageInfo messageInfo)
+        {
+            messageInfo.MessageId = model.MessageId;
+            messageInfo.ClientId = model.ClientId;
+            messageInfo.SenderName = model.FromMailAddress;
+            messageInfo.DateDelivery = model.DateDelivery;
+            messageInfo.Subject = model.Subject;
+            messageInfo.Body = model.Body;
+            messageInfo.IsRead = model.IsRead;
+            messageInfo.Reply = model.Reply;
+            return messageInfo;
+        }
+        private MessageInfoViewModel CreateModel(MessageInfo messageInfo)
+        {
+            return new MessageInfoViewModel
+            {
+                MessageId = messageInfo.MessageId,
+                SenderName = messageInfo.SenderName,
+                DateDelivery = messageInfo.DateDelivery,
+                Subject = messageInfo.Subject,
+                Body = messageInfo.Body,
+                Reply = messageInfo.Reply,
+                IsRead = messageInfo.IsRead
+            };
+        }
     }
 }

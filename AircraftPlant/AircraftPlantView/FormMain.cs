@@ -174,6 +174,17 @@ namespace AircraftPlantView
             LoadData();
         }
 
-        
+
+        private void запускРаботыToolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {
+            workProcess.DoWork(implementerLogic, orderLogic);
+            LoadData();
+        }
+
+        private void письмаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormMessagesInfo>();
+            form.ShowDialog();
+        }
     }
 }

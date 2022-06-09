@@ -25,17 +25,17 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
         {
             if (model == null)
             {
-                return clientStorage.GetFullList();
+                return _clientStorage.GetFullList();
             }
             if (model.Id.HasValue)
             {
-                return new List<ClientViewModel> { clientStorage.GetElement(model) };
+                return new List<ClientViewModel> { _clientStorage.GetElement(model) };
             }
-            return clientStorage.GetFilteredList(model);
+            return _clientStorage.GetFilteredList(model);
         }
         public void CreateOrUpdate(ClientBindingModel model)
         {
-            var element = clientStorage.GetElement(new ClientBindingModel { Email = model.Email });
+            var element = _clientStorage.GetElement(new ClientBindingModel { Email = model.Email });
             if (element != null && element.Id != model.Id)
             {
                 throw new Exception("Уже есть клиент с таким ФИО");
@@ -51,21 +51,21 @@ namespace AircraftPlantBusinessLogic.BusinessLogics
 
             if (model.Id.HasValue)
             {
-                clientStorage.Update(model);
+                _clientStorage.Update(model);
             }
             else
             {
-                clientStorage.Insert(model);
+                _clientStorage.Insert(model);
             }
         }
         public void Delete(ClientBindingModel model)
         {
-            var element = clientStorage.GetElement(new ClientBindingModel { Id = model.Id });
+            var element = _clientStorage.GetElement(new ClientBindingModel { Id = model.Id });
             if (element == null)
             {
                 throw new Exception("Клиент не найден");
             }
-            clientStorage.Delete(model);
+            _clientStorage.Delete(model);
         }
     }
 }

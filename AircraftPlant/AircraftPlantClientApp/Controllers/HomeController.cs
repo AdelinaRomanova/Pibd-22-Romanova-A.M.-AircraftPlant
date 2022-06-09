@@ -141,13 +141,46 @@ namespace AircraftPlantClientApp.Controllers
             return count * _plane.Price;
         }
 
-        public IActionResult Messages()
+        [HttpGet]
+        public IActionResult MessageInfo(int pageNumber)
         {
             if (Program.Client == null)
             {
                 return Redirect("~/Home/Enter");
             }
-            return View(APIClient.GetRequest<List<MessageInfoViewModel>>($"api/client/GetMessages?clientId={Program.Client.Id}"));
+
+            List<MessageInfoViewModel> model = new List<MessageInfoViewModel>();
+            if (pageNumber > 0)
+            {
+                model = APIClient.GetRequest<List<MessageInfoViewModel>>($"api/client/GetClientsMessagesInfo?clientId={Program.Client.Id}&pageNumber={pageNumber}");
+            }
+
+            if (model.Count == 0 && Program.PageNumber != 0)
+            {
+                model = APIClient.GetRequest<List<MessageInfoViewModel>>($"api/client/GetClientsMessagesInfo?clientId={Program.Client.Id}&pageNumber={Program.PageNumber}");
+            }
+            else
+            {
+                Program.PageNumber = pageNumber;
+            }
+            ViewBag.Id = Program.PageNumber;
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult NextMailsPage()
+        {
+            return Redirect($"~/Home/MessageInfo?pageNumber={Program.PageNumber + 1}");
+        }
+
+        [HttpGet]
+        public IActionResult PrevMailsPage()
+        {
+            if (Program.PageNumber > 1)
+            {
+                return Redirect($"~/Home/MessageInfo?pageNumber={Program.PageNumber - 1}");
+            }
+            return Redirect($"~/Home/MessageInfo?pageNumber={Program.PageNumber}");
         }
     }
 }

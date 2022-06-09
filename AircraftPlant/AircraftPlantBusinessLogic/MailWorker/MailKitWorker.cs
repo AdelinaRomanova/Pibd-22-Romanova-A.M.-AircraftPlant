@@ -1,5 +1,6 @@
 ﻿using AircraftPlantContracts.BindingModels;
 using AircraftPlantContracts.BusinessLogicsContracts;
+using AircraftPlantContracts.StoragesContracts;
 using MailKit.Net.Pop3;
 using MailKit.Security;
 using System;
@@ -14,7 +15,11 @@ namespace AircraftPlantBusinessLogic.MailWorker
 {
     public class MailKitWorker : AbstractMailWorker
     {
-        public MailKitWorker(IMessageInfoLogic messageInfoLogic) : base(messageInfoLogic) { }
+        private IClientStorage _clientStorage;
+        public MailKitWorker(IMessageInfoLogic messageInfoLogic, IClientStorage clientStorage) : base(messageInfoLogic)
+        {
+            _clientStorage = clientStorage;
+        }
         protected override async Task SendMailAsync(MailSendInfoBindingModel info)
         {
             using var objMailMessage = new MailMessage();
@@ -55,6 +60,7 @@ namespace AircraftPlantBusinessLogic.MailWorker
                         {
                             list.Add(new MessageInfoBindingModel
                             {
+                                ClientId = _clientStorage.GetElement(new ClientBindingModel { Email = mail.Address })?.Id,
                                 DateDelivery = message.Date.DateTime,
                                 MessageId = message.MessageId,
                                 FromMailAddress = mail.Address,

@@ -19,10 +19,10 @@ namespace AircraftPlantListImplement.Implements
         }
         public List<MessageInfoViewModel> GetFullList()
         {
-            List<MessageInfoViewModel> result = new List<MessageInfoViewModel>();
-            foreach (var message in source.MessagesInfo)
+            var result = new List<MessageInfoViewModel>();
+            foreach (var messageInfo in source.MessagesInfo)
             {
-                result.Add(CreateModel(message));
+                result.Add(CreateModel(messageInfo));
             }
             return result;
         }
@@ -33,14 +33,33 @@ namespace AircraftPlantListImplement.Implements
             {
                 return null;
             }
-
+            int toSkip = model.ToSkip ?? 0;
+            int toTake = model.ToTake ?? source.MessagesInfo.Count;
             var result = new List<MessageInfoViewModel>();
+            if (model.ToSkip.HasValue && model.ToTake.HasValue && !model.ClientId.HasValue)
+            {
+                foreach (var msg in source.MessagesInfo)
+                {
+                    if (toSkip > 0) { toSkip--; continue; }
+                    if (toTake > 0)
+                    {
+                        result.Add(CreateModel(msg));
+                        toTake--;
+                    }
+                }
+                return result;
+            }
             foreach (var message in source.MessagesInfo)
             {
-                if ((model.ClientId.HasValue && message.ClientId == model.ClientId) 
-                    || (!model.ClientId.HasValue && message.DateDelivery.Date == model.DateDelivery.Date))
+                if ((model.ClientId.HasValue && message.ClientId == model.ClientId) ||
+                    (!model.ClientId.HasValue && message.DateDelivery.Date == model.DateDelivery.Date))
                 {
-                    result.Add(CreateModel(message));
+                    if (toSkip > 0) { toSkip--; continue; }
+                    if (toTake > 0)
+                    {
+                        result.Add(CreateModel(message));
+                        toTake--;
+                    }
                 }
             }
             return result;
@@ -48,36 +67,52 @@ namespace AircraftPlantListImplement.Implements
 
         public void Insert(MessageInfoBindingModel model)
         {
+            if (model == null)
+            {
+                return;
+            }
             source.MessagesInfo.Add(CreateModel(model, new MessageInfo()));
         }
-        private MessageInfo CreateModel(MessageInfoBindingModel model, MessageInfo message)
+        public void Update(MessageInfoBindingModel model)
         {
-            string clientFIO = string.Empty;
-            foreach (var client in source.Clients)
+            MessageInfo tempMessageInfo = null;
+            foreach (var messageInfo in source.MessagesInfo)
             {
-                if (client.Id == model.ClientId)
+                if (messageInfo.MessageId == model.MessageId)
                 {
-                    clientFIO = client.ClientFIO;
-                    break;
+                    tempMessageInfo = messageInfo;
                 }
             }
-            message.MessageId = model.MessageId;
-            message.SenderName = clientFIO;
-            message.Body = model.Body;
-            message.ClientId = model.ClientId;
-            message.DateDelivery = model.DateDelivery;
-            message.Subject = model.Subject;
-            return message;
+            if (tempMessageInfo == null)
+            {
+                throw new Exception("Элемент не найден");
+            }
+            CreateModel(model, tempMessageInfo);
         }
-        private MessageInfoViewModel CreateModel(MessageInfo message)
+
+        private static MessageInfo CreateModel(MessageInfoBindingModel model, MessageInfo messageInfo)
+        {
+            messageInfo.MessageId = model.MessageId;
+            messageInfo.ClientId = model.ClientId;
+            messageInfo.SenderName = model.FromMailAddress;
+            messageInfo.DateDelivery = model.DateDelivery;
+            messageInfo.Subject = model.Subject;
+            messageInfo.Body = model.Body;
+            messageInfo.IsRead = model.IsRead;
+            messageInfo.Reply = model.Reply;
+            return messageInfo;
+        }
+        private static MessageInfoViewModel CreateModel(MessageInfo messageInfo)
         {
             return new MessageInfoViewModel
             {
-                MessageId = message.MessageId,
-                Body = message.Body,
-                DateDelivery = message.DateDelivery,
-                SenderName = message.SenderName,
-                Subject = message.Subject
+                MessageId = messageInfo.MessageId,
+                SenderName = messageInfo.SenderName,
+                DateDelivery = messageInfo.DateDelivery,
+                Subject = messageInfo.Subject,
+                Body = messageInfo.Body,
+                Reply = messageInfo.Reply,
+                IsRead = messageInfo.IsRead
             };
         }
     }

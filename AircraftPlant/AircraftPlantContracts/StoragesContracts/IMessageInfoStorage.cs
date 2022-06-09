@@ -13,5 +13,7 @@ namespace AircraftPlantContracts.StoragesContracts
         List<MessageInfoViewModel> GetFullList();
         List<MessageInfoViewModel> GetFilteredList(MessageInfoBindingModel model);
         void Insert(MessageInfoBindingModel model);
+        void Update(MessageInfoBindingModel model);
     }
+
 }
