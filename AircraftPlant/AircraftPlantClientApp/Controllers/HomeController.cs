@@ -140,5 +140,14 @@ namespace AircraftPlantClientApp.Controllers
             PlaneViewModel _plane = APIClient.GetRequest<PlaneViewModel>($"api/main/getplane?planeId={plane}");
             return count * _plane.Price;
         }
+
+        public IActionResult Messages()
+        {
+            if (Program.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View(APIClient.GetRequest<List<MessageInfoViewModel>>($"api/client/GetMessages?clientId={Program.Client.Id}"));
+        }
     }
 }

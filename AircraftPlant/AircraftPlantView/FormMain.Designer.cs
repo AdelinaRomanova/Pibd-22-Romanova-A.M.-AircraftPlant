@@ -140,6 +140,13 @@
             this.отчётыToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
             this.отчётыToolStripMenuItem.Text = "Отчёты";
             // 
+            // запускРаботыToolStripMenuItem
+            // 
+            this.запускРаботыToolStripMenuItem.Name = "запускРаботыToolStripMenuItem";
+            this.запускРаботыToolStripMenuItem.Size = new System.Drawing.Size(124, 24);
+            this.запускРаботыToolStripMenuItem.Text = "Начать работу";
+            this.запускРаботыToolStripMenuItem.Click += new System.EventHandler(this.запускРаботыToolStripMenuItem_Click);
+            // 
             // dataGridView
             // 
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;

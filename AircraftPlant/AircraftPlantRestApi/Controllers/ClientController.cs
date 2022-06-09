@@ -2,7 +2,7 @@
 using AircraftPlantContracts.BusinessLogicsContracts;
 using AircraftPlantContracts.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Collections.Generic;
 
 namespace AircraftPlantRestApi.Controllers
 {
@@ -10,15 +10,17 @@ namespace AircraftPlantRestApi.Controllers
 	[ApiController]
 	public class ClientController : ControllerBase
 	{
-		private readonly IClientLogic _logic;
-		public ClientController(IClientLogic logic)
+		private readonly IClientLogic _clientLogic;
+		private readonly IMessageInfoLogic _messageLogic;
+		public ClientController(IClientLogic logic, IMessageInfoLogic messageLogic)
 		{
-			_logic = logic;
+			_clientLogic = logic;
+			_messageLogic = messageLogic;
 		}
 		[HttpGet]
 		public ClientViewModel Login(string login, string password)
 		{
-			var list = _logic.Read(new ClientBindingModel
+			var list = _clientLogic.Read(new ClientBindingModel
 			{
 				Email = login,
 				Password = password
@@ -26,8 +28,11 @@ namespace AircraftPlantRestApi.Controllers
 			return (list != null && list.Count > 0) ? list[0] : null;
 		}
 		[HttpPost]
-		public void Register(ClientBindingModel model) => _logic.CreateOrUpdate(model);
+		public void Register(ClientBindingModel model) => _clientLogic.CreateOrUpdate(model);
 		[HttpPost]
-		public void UpdateData(ClientBindingModel model) => _logic.CreateOrUpdate(model);
+		public void UpdateData(ClientBindingModel model) => _clientLogic.CreateOrUpdate(model);
+
+		[HttpGet]
+		public List<MessageInfoViewModel> GetMessages(int clientId) => _messageLogic.Read(new MessageInfoBindingModel { ClientId = clientId });
 	}
 }

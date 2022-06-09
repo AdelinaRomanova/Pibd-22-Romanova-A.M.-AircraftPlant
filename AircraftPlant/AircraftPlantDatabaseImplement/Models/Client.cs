@@ -20,5 +20,8 @@ namespace AircraftPlantDatabaseImplement.Models
 
         [ForeignKey("ClientId")]
         public List<Order> Orders { get; set; }
+        
+        [ForeignKey("ClientId")]
+        public virtual List<MessageInfo> MessagesInfo { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 using AircraftPlantBusinessLogic.BusinessLogics;
+using AircraftPlantBusinessLogic.MailWorker;
+using AircraftPlantContracts.BindingModels;
 using AircraftPlantContracts.BusinessLogicsContracts;
 using AircraftPlantContracts.StoragesContracts;
 using AircraftPlantDatabaseImplement.Implements;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace AircraftPlantRestApi
 {
@@ -27,6 +30,8 @@ namespace AircraftPlantRestApi
 			services.AddTransient<IClientStorage, ClientStorage>();
 			services.AddTransient<IOrderStorage, OrderStorage>();
 			services.AddTransient<IPlaneStorage, PlaneStorage>();
+			services.AddTransient<IMessageInfoStorage, MessageInfoStorage>();
+
 			services.AddTransient<IWarehouseStorage, WarehouseStorage>();
 			services.AddTransient<IComponentStorage, ComponentStorage>();
 
@@ -37,6 +42,11 @@ namespace AircraftPlantRestApi
 			services.AddTransient<IComponentLogic, ComponentLogic>();
 
 			services.AddControllers().AddNewtonsoftJson(); ;
+			services.AddTransient<IMessageInfoLogic, MessageInfoLogic>();
+
+			services.AddSingleton<AbstractMailWorker, MailKitWorker>();
+
+			services.AddControllers();
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo
@@ -63,6 +73,17 @@ namespace AircraftPlantRestApi
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+			});
+
+			var mailSender = app.ApplicationServices.GetService<AbstractMailWorker>();
+			mailSender.MailConfig(new MailConfigBindingModel
+			{
+				MailLogin = Configuration?.GetSection("MailLogin")?.Value.ToString(),
+				MailPassword = Configuration?.GetSection("MailPassword")?.Value.ToString(),
+				SmtpClientHost = Configuration?.GetSection("SmtpClientHost")?.Value.ToString(),
+				SmtpClientPort = Convert.ToInt32(Configuration?.GetSection("SmtpClientPort")?.Value.ToString()),
+				PopHost = Configuration?.GetSection("PopHost")?.Value.ToString(),
+				PopPort = Convert.ToInt32(Configuration?.GetSection("PopPort")?.Value.ToString())
 			});
 		}
 	}
