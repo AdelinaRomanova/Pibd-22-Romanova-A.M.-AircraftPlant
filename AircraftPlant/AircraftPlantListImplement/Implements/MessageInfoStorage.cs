@@ -17,50 +17,34 @@ namespace AircraftPlantListImplement.Implements
         {
             source = DataListSingleton.GetInstance();
         }
-        public List<MessageInfoViewModel> GetFullList()
-        {
-            var result = new List<MessageInfoViewModel>();
-            foreach (var messageInfo in source.MessagesInfo)
-            {
-                result.Add(CreateModel(messageInfo));
-            }
-            return result;
-        }
-
         public List<MessageInfoViewModel> GetFilteredList(MessageInfoBindingModel model)
         {
             if (model == null)
             {
                 return null;
             }
-            int toSkip = model.ToSkip ?? 0;
-            int toTake = model.ToTake ?? source.MessagesInfo.Count;
             var result = new List<MessageInfoViewModel>();
-            if (model.ToSkip.HasValue && model.ToTake.HasValue && !model.ClientId.HasValue)
+            foreach (var messageInfo in source.MessagesInfo)
             {
-                foreach (var msg in source.MessagesInfo)
+                if ((model.ClientId.HasValue && messageInfo.ClientId == model.ClientId) ||
+                    (!model.ClientId.HasValue && messageInfo.DateDelivery.Date == model.DateDelivery.Date))
                 {
-                    if (toSkip > 0) { toSkip--; continue; }
-                    if (toTake > 0)
-                    {
-                        result.Add(CreateModel(msg));
-                        toTake--;
-                    }
+                    result.Add(CreateModel(messageInfo));
                 }
+            }
+            if (result.Count > 0)
+            {
                 return result;
             }
-            foreach (var message in source.MessagesInfo)
+            return null;
+        }
+
+        public List<MessageInfoViewModel> GetFullList()
+        {
+            var result = new List<MessageInfoViewModel>();
+            foreach (var messageInfo in source.MessagesInfo)
             {
-                if ((model.ClientId.HasValue && message.ClientId == model.ClientId) ||
-                    (!model.ClientId.HasValue && message.DateDelivery.Date == model.DateDelivery.Date))
-                {
-                    if (toSkip > 0) { toSkip--; continue; }
-                    if (toTake > 0)
-                    {
-                        result.Add(CreateModel(message));
-                        toTake--;
-                    }
-                }
+                result.Add(CreateModel(messageInfo));
             }
             return result;
         }
@@ -73,6 +57,7 @@ namespace AircraftPlantListImplement.Implements
             }
             source.MessagesInfo.Add(CreateModel(model, new MessageInfo()));
         }
+
         public void Update(MessageInfoBindingModel model)
         {
             MessageInfo tempMessageInfo = null;

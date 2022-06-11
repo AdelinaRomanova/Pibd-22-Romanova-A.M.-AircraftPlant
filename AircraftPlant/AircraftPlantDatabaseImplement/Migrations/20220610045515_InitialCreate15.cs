@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AircraftPlantDatabaseImplement.Migrations
 {
-    public partial class InitialCreate12 : Migration
+    public partial class InitialCreate15 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -90,8 +90,7 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsRead = table.Column<bool>(type: "bit", nullable: false),
-                    Reply = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Viewed = table.Column<bool>(type: "bit", nullable: false)
+                    Reply = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

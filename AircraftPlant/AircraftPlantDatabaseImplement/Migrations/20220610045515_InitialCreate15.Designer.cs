@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AircraftPlantDatabaseImplement.Migrations
 {
     [DbContext(typeof(AircraftPlantDatabase))]
-    [Migration("20220609185747_InitialCreate12")]
-    partial class InitialCreate12
+    [Migration("20220610045515_InitialCreate15")]
+    partial class InitialCreate15
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -108,9 +108,6 @@ namespace AircraftPlantDatabaseImplement.Migrations
 
                     b.Property<string>("Subject")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Viewed")
-                        .HasColumnType("bit");
 
                     b.HasKey("MessageId");
 

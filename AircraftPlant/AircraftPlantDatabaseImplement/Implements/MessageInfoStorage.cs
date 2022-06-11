@@ -20,7 +20,6 @@ namespace AircraftPlantDatabaseImplement.Implements
             .Select(CreateModel)
             .ToList();
         }
-
         public List<MessageInfoViewModel> GetFilteredList(MessageInfoBindingModel model)
         {
             if (model == null)
@@ -41,10 +40,8 @@ namespace AircraftPlantDatabaseImplement.Implements
 
             return messages.Select(CreateModel).ToList();
         }
-
         public void Insert(MessageInfoBindingModel model)
         {
-
             using var context = new AircraftPlantDatabase();
             if (context.MessagesInfo.FirstOrDefault(rec => rec.MessageId == model.MessageId) != null) return;
             if (model.ClientId == null) model.ClientId = context.Clients.FirstOrDefault(rec => rec.Email == model.FromMailAddress).Id;
@@ -56,31 +53,10 @@ namespace AircraftPlantDatabaseImplement.Implements
                 DateDelivery = model.DateDelivery,
                 Subject = model.Subject,
                 Body = model.Body,
-                IsRead = false
-            });
+                IsRead = true
+            }) ;
             context.SaveChanges();
-
-
-            //    using var context = new AircraftPlantDatabase();
-            //    MessageInfo element = context.MessagesInfo.FirstOrDefault(rec => rec.MessageId == model.MessageId);
-            //    if (element != null)
-            //    {
-            //         throw new Exception("Уже есть письмо с таким идентификатором");
-            //    }
-            //    context.MessagesInfo.Add(new MessageInfo
-            //    {
-            //        MessageId = model.MessageId,
-            //        ClientId = model.ClientId,
-            //        SenderName = model.FromMailAddress,
-            //        DateDelivery = model.DateDelivery,
-            //        Subject = model.Subject,
-            //        Body = model.Body,
-            //        IsRead = false
-            //    });
-            //    context.SaveChanges();
-            //}
         }
-
         public void Update(MessageInfoBindingModel model)
         {
             using var context = new AircraftPlantDatabase();
@@ -106,7 +82,6 @@ namespace AircraftPlantDatabaseImplement.Implements
                 throw;
             }
         }
-
         private MessageInfoViewModel CreateModel(MessageInfo message)
         {
             return new MessageInfoViewModel

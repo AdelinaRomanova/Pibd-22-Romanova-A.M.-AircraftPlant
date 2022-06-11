@@ -1,6 +1,7 @@
 ﻿using AircraftPlantBusinessLogic.MailWorker;
 using AircraftPlantContracts.BindingModels;
 using AircraftPlantContracts.BusinessLogicsContracts;
+using AircraftPlantContracts.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,31 +16,15 @@ namespace AircraftPlantView
 {
     public partial class FormMessageInfo : Form
     {
+
         public string MessageId;
         private readonly IMessageInfoLogic _logic;
         private readonly AbstractMailWorker _mailWorker;
         public FormMessageInfo(IMessageInfoLogic logic, AbstractMailWorker mailWorker)
-        {
+        { 
             InitializeComponent();
             _logic = logic;
             _mailWorker = mailWorker;
-        }
-
-        private void buttonReply_Click(object sender, EventArgs e)
-        {
-            _mailWorker.MailSendAsync(new MailSendInfoBindingModel
-            {
-                MailAddress = labelSenderName.Text,
-                Subject = textBoxReplySubject.Text,
-                Text = textBoxReply.Text
-            });
-            _logic.CreateOrUpdate(new MessageInfoBindingModel
-            {
-                MessageId = MessageId,
-                Reply = textBoxReply.Text
-            });
-            MessageBox.Show("Письмо отправлено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Close();
         }
 
         private void FormMessageInfo_Load(object sender, EventArgs e)
@@ -66,6 +51,28 @@ namespace AircraftPlantView
             }
         }
 
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
 
+
+        private void buttonReply_Click_1(object sender, EventArgs e)
+        {
+            _mailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = labelSenderName.Text,
+                Subject = textBoxReplySubject.Text,
+                Text = textBoxReply.Text
+            });
+            _logic.CreateOrUpdate(new MessageInfoBindingModel
+            {
+                MessageId = MessageId,
+                Reply = textBoxReply.Text
+            });
+            MessageBox.Show("Письмо отправлено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Close();
+        }
     }
 }

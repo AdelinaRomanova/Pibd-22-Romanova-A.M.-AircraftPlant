@@ -18,7 +18,5 @@ namespace AircraftPlantContracts.BindingModels
         public DateTime DateDelivery { get; set; }
         public bool IsRead { get; set; }
         public string Reply { get; set; }
-        public int? ToSkip { get; set; }
-        public int? ToTake { get; set; }
     }
 }

@@ -107,9 +107,6 @@ namespace AircraftPlantDatabaseImplement.Migrations
                     b.Property<string>("Subject")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Viewed")
-                        .HasColumnType("bit");
-
                     b.HasKey("MessageId");
 
                     b.HasIndex("ClientId");

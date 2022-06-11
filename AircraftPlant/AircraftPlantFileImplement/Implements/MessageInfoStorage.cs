@@ -17,30 +17,21 @@ namespace AircraftPlantFileImplement.Implements
         {
             source = FileDataListSingleton.GetInstance();
         }
-
         public List<MessageInfoViewModel> GetFullList()
         {
             return source.MessagesInfo.Select(CreateModel).ToList();
         }
-
         public List<MessageInfoViewModel> GetFilteredList(MessageInfoBindingModel model)
         {
             if (model == null)
             {
                 return null;
             }
-            if (model.ToSkip.HasValue && model.ToTake.HasValue && !model.ClientId.HasValue)
-            {
-                return source.MessagesInfo.Skip((int)model.ToSkip).Take((int)model.ToTake).Select(CreateModel).ToList();
-            }
             return source.MessagesInfo.Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
             (!model.ClientId.HasValue && rec.DateDelivery.Date == model.DateDelivery.Date))
-                .Skip(model.ToSkip ?? 0)
-                .Take(model.ToTake ?? source.MessagesInfo.Count())
                 .Select(CreateModel)
                 .ToList();
         }
-
         public void Insert(MessageInfoBindingModel model)
         {
             MessageInfo element = source.MessagesInfo.FirstOrDefault(rec => rec.MessageId == model.MessageId);
@@ -50,7 +41,6 @@ namespace AircraftPlantFileImplement.Implements
             }
             source.MessagesInfo.Add(CreateModel(model, element));
         }
-
         public void Update(MessageInfoBindingModel model)
         {
             MessageInfo element = source.MessagesInfo.FirstOrDefault(rec => rec.MessageId == model.MessageId);

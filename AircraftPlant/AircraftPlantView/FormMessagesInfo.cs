@@ -1,8 +1,11 @@
 ﻿using AircraftPlantContracts.BindingModels;
 using AircraftPlantContracts.BusinessLogicsContracts;
+using AircraftPlantContracts.ViewModels;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 using Unity;
+using PagedList;
 
 namespace AircraftPlantView
 {
@@ -88,6 +91,26 @@ namespace AircraftPlantView
         }
 
         private void buttonOpen_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormMessageInfo>();
+            form.MessageId = dataGridView.SelectedRows[0].Cells[0].Value.ToString();
+            form.ShowDialog();
+            LoadData();
+        }
+
+        private void dataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView.SelectedRows.Count == 1)
+            {
+                string id = dataGridView.SelectedRows[0].Cells[0].Value.ToString();
+                var form = Program.Container.Resolve<FormMessageInfo>();
+                form.MessageId = id;
+                form.ShowDialog();
+                LoadData();
+            }
+        }
+
+        private void buttonOpen_Click_1(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormMessageInfo>();
             form.MessageId = dataGridView.SelectedRows[0].Cells[0].Value.ToString();

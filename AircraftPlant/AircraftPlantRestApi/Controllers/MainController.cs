@@ -14,7 +14,7 @@ namespace AircraftPlantRestApi.Controllers
 	{
 		private readonly IOrderLogic _order;
 		private readonly IPlaneLogic _plane;
-		public MainController(IOrderLogic order, IPlaneLogic plane)
+		public MainController(IOrderLogic order, IPlaneLogic plane, IMessageInfoLogic message)
 		{
 			_order = order;
 			_plane = plane;

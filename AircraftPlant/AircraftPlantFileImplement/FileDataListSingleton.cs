@@ -230,8 +230,6 @@ namespace AircraftPlantFileImplement
 						Body = elem.Element("Body").Value,
 						SenderName = elem.Element("SenderName").Value,
 						Subject = elem.Element("Subject").Value,
-						IsRead = Convert.ToBoolean(elem.Element("IsRead").Value),
-						Reply = elem.Element("Reply").Value,
 						DateDelivery = DateTime.Parse(elem.Element("DateDelivery").Value)
 					});
 				}
@@ -342,18 +340,16 @@ namespace AircraftPlantFileImplement
 				var xElement = new XElement("Messages");
 				foreach (var message in MessagesInfo)
 				{
-					xElement.Add(new XElement("MessageInfo",
-					new XAttribute("MessageId", message.MessageId),
-					new XElement("ClientId", message.ClientId),
-					new XElement("SenderName", message.SenderName),
-					new XElement("DateDelivery", message.DateDelivery.ToString()),
-					new XElement("Subject", message.Subject),
-					new XElement("Body", message.Body)),
-					new XElement("IsRead", message.IsRead),
-					new XElement("Reply", message.Reply));
+					xElement.Add(new XElement("Message",
+						new XAttribute("MessageId", message.MessageId),
+						new XElement("ClientId", message.ClientId),
+						new XElement("SenderName", message.SenderName),
+						new XElement("Subject", message.Subject),
+						new XElement("Body", message.Body),
+						new XElement("DateDelivery", message.DateDelivery)));
 				}
 				var xDocument = new XDocument(xElement);
-				xDocument.Save(MessageInfoFileName);
+				xDocument.Save(OrderFileName);
 			}
 		}
 		private void SaveWarehouses()
